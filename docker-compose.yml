@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  elemento:
+    image: 'registry.gitlab.telconet.ec/docker/images/$NOMBRE_IMAGEN:$CI_VERSION'
+    container_name: ms-tn-infraestructura-elemento
+    hostname: 'ms-tn-infraestructura-elemento'
+    domainname: telconet.ec
+    restart: always 
+    ports:
+      - '1603:1603'
+    volumes:
+      - $ruta_proyecto/application.properties:/application.properties
+      - $ruta_proyecto/log4j2.xml:/log4j2.xml
+    extra_hosts:
+      - "kafka.telconet.ec:172.12.0.3"
+    networks:
+      - kafka_subnet
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.elemento-router.rule=Host(`ms-tn-infraestructura-elemento.telconet.ec`)"
+      - "traefik.http.routers.elemento-router.entrypoints=web"
+      
+networks:
+    kafka_subnet:
+      external:
+            name: kafka_subnet
+
+
+
