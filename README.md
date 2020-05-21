@@ -1,0 +1,2 @@
+ms-core-tec-elemento
+
