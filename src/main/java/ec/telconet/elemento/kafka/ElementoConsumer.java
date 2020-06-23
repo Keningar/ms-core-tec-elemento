@@ -22,6 +22,7 @@ import ec.telconet.microservicio.core.tecnico.kafka.cons.CoreTecnicoConstants;
 import ec.telconet.microservicio.core.tecnico.kafka.request.DatosVehiculoKafkaReq;
 import ec.telconet.microservicio.core.tecnico.kafka.request.DetalleElementoKafkaReq;
 import ec.telconet.microservicio.core.tecnico.kafka.request.ElementoKafkaReq;
+import ec.telconet.microservicio.core.tecnico.kafka.request.ElementoPorGrupoKafkaReq;
 import ec.telconet.microservicio.core.tecnico.kafka.request.HistorialElementoKafkaReq;
 import ec.telconet.microservicio.core.tecnico.kafka.request.MarcaElementoKafkaReq;
 import ec.telconet.microservicio.core.tecnico.kafka.request.ModeloElementoKafkaReq;
@@ -35,6 +36,8 @@ import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.Datos
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.DetalleElementoReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorCantonParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorFilialParamsReqDTO;
+import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorGrupoReqDTO;
+import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorGrupoResDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorMonitorizadoReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorParroquiaParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorProvinciaParamsReqDTO;
@@ -414,6 +417,16 @@ public class ElementoConsumer {
 				// Fin Proceso logico
 				KafkaResponse<DatosVehiculoResDTO> response = new KafkaResponse<DatosVehiculoResDTO>();
 				response.setData(consultasService.datosVehiculo(requestService));
+				commitKafka.acknowledge();
+				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
+				return (KafkaResponse<T>) response;
+			} else if (kafkaRequest.getOp().equalsIgnoreCase(CoreTecnicoConstants.OP_LISTA_ELEMENTO_POR_GRUPO)) {
+				ElementoPorGrupoKafkaReq data = Formato.mapearObjDeserializado(kafkaRequest.getData(), ElementoPorGrupoKafkaReq.class);
+				// Inicio Proceso logico
+				ElementoPorGrupoReqDTO requestService = Formato.mapearObjDeserializado(data, ElementoPorGrupoReqDTO.class);
+				// Fin Proceso logico
+				KafkaResponse<ElementoPorGrupoResDTO> response = new KafkaResponse<ElementoPorGrupoResDTO>();
+				response.setData(consultasService.elementoPorGrupo(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;

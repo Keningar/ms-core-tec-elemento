@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.DatosVehiculoReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.DatosVehiculoResDTO;
+import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorGrupoReqDTO;
+import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorGrupoResDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.service.InkgElementoConsultaService;
 
 /**
@@ -36,5 +38,21 @@ public class ConsultasService {
 	@Transactional(readOnly = true)
 	public List<DatosVehiculoResDTO> datosVehiculo(DatosVehiculoReqDTO request) throws Exception {
 		return inkgElementoConsultaService.datosVehiculo(request);
+	}
+	
+	/**
+	 * Método que retorna los elementos de un grupo de monitorización
+	 * 
+	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
+	 * @version 1.0
+	 * @since 23/06/2020
+	 * 
+	 * @param request ElementoPorGrupoReqDTO
+	 * @return List<ElementoPorGrupoResDTO>
+	 * @throws Exception
+	 */
+	@Transactional(readOnly = true)
+	public List<ElementoPorGrupoResDTO> elementoPorGrupo(ElementoPorGrupoReqDTO request) throws Exception {
+		return inkgElementoConsultaService.elementoPorGrupo(request);
 	}
 }
