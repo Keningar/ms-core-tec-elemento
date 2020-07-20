@@ -11,6 +11,7 @@ import ec.telconet.microservicio.dependencia.util.dto.PageDTO;
 import ec.telconet.microservicio.dependencia.util.response.GenericBasicResponse;
 import ec.telconet.microservicio.dependencia.util.response.GenericListResponse;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorCantonParamsReqDTO;
+import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorDepartamentoParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorFilialParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorMonitorizadoReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorParroquiaParamsReqDTO;
@@ -282,6 +283,25 @@ public class ElementoController {
 		log.info("Petición recibida: listaElementoPorFilialParams");
 		GenericListResponse<InfoElemento> response = new GenericListResponse<InfoElemento>();
 		response.setData(elementoService.listaElementoPorFilialParams(request));
+		return response;
+	}
+	
+	/**
+	 * Método que retorna la lista de elementos por departamento y params
+	 * 
+	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
+	 * @version 1.0
+	 * @since 02/03/2020
+	 * 
+	 * @param request {@linkplain ElementoPorDepartamentoParamsReqDTO}
+	 * @return {@linkplain GenericListResponse}
+	 * @throws Exception
+	 */
+	@PostMapping(path = "listaElementoPorDepartamentoParams", consumes = "application/json")
+	public GenericListResponse<InfoElemento> listaElementoPorDepartamentoParams(@RequestBody ElementoPorDepartamentoParamsReqDTO request) throws Exception {
+		log.info("Petición recibida: listaElementoPorDepartamentoParams");
+		GenericListResponse<InfoElemento> response = new GenericListResponse<InfoElemento>();
+		response.setData(elementoService.listaElementoPorDepartamentoParams(request));
 		return response;
 	}
 }

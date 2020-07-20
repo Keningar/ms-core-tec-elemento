@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ec.telconet.microservicio.dependencia.util.dto.PageDTO;
 import ec.telconet.microservicio.dependencia.util.exception.GenericException;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorCantonParamsReqDTO;
+import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorDepartamentoParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorFilialParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorMonitorizadoReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorParroquiaParamsReqDTO;
@@ -236,5 +237,21 @@ public class ElementoService {
 	@Transactional(readOnly = true)
 	public List<InfoElemento> listaElementoPorFilialParams(ElementoPorFilialParamsReqDTO request) throws Exception {
 		return infoElementoService.elementoPorFilialParams(request);
+	}
+	
+	/**
+	 * Método que retorna la lista de elementos por departamento y params
+	 * 
+	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
+	 * @version 1.0
+	 * @since 02/03/2020
+	 * 
+	 * @param request ElementoPorDepartamentoParamsReqDTO
+	 * @return List<InfoElemento>
+	 * @throws Exception
+	 */
+	@Transactional(readOnly = true)
+	public List<InfoElemento> listaElementoPorDepartamentoParams(ElementoPorDepartamentoParamsReqDTO request) throws Exception {
+		return infoElementoService.elementoPorDepartamentoParams(request);
 	}
 }

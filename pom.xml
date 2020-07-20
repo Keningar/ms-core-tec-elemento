@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>ec.telconet</groupId>
 	<artifactId>ms-core-tec-elemento</artifactId>
-	<version>1.0.1-RELEASE</version>
+	<version>1.0.2-RELEASE</version>
 	<name>ms-core-tec-elemento</name>
 	<description>MS Elementos</description>
 
@@ -63,12 +63,12 @@
 		<dependency>
 			<groupId>ec.telconet.microservicios.dependencias</groupId>
 			<artifactId>db-repositorio-infraestructura</artifactId>
-			<version>dev-mpluas-3</version>
+			<version>dev-mpluas-4</version>
 		</dependency>
 		<dependency>
 			<groupId>ec.telconet.microservicios.dependencias</groupId>
 			<artifactId>ms-core</artifactId>
-			<version>1.0.0-RELEASE</version>
+			<version>dev-mpluas-4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>ec.telconet.microservicios.dependencias</groupId>
 			<artifactId>ms-core-tecnico</artifactId>
-			<version>dev-mpluas-2</version>
+			<version>dev-mpluas-3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>

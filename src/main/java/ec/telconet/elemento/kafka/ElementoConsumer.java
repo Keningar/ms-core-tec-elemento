@@ -18,6 +18,7 @@ import ec.telconet.elemento.service.HistorialElementoService;
 import ec.telconet.elemento.service.MarcaElementoService;
 import ec.telconet.elemento.service.ModeloElementoService;
 import ec.telconet.elemento.service.TipoElementoService;
+import ec.telconet.elemento.service.TransaccionesService;
 import ec.telconet.microservicio.core.tecnico.kafka.cons.CoreTecnicoConstants;
 import ec.telconet.microservicio.core.tecnico.kafka.request.DatosVehiculoKafkaReq;
 import ec.telconet.microservicio.core.tecnico.kafka.request.DetalleElementoKafkaReq;
@@ -27,6 +28,7 @@ import ec.telconet.microservicio.core.tecnico.kafka.request.HistorialElementoKaf
 import ec.telconet.microservicio.core.tecnico.kafka.request.MarcaElementoKafkaReq;
 import ec.telconet.microservicio.core.tecnico.kafka.request.ModeloElementoKafkaReq;
 import ec.telconet.microservicio.core.tecnico.kafka.request.TipoElementoKafkaReq;
+import ec.telconet.microservicio.core.tecnico.kafka.request.UbicacionElementokafkaReq;
 import ec.telconet.microservicio.dependencia.util.exception.GenericException;
 import ec.telconet.microservicio.dependencia.util.general.Formato;
 import ec.telconet.microservicio.dependencia.util.kafka.KafkaRequest;
@@ -35,6 +37,7 @@ import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.Datos
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.DatosVehiculoResDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.DetalleElementoReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorCantonParamsReqDTO;
+import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorDepartamentoParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorFilialParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorGrupoReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorGrupoResDTO;
@@ -45,6 +48,7 @@ import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.Eleme
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorTipoReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.HistorialElementoPorFechaReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.HistorialElementoReqDTO;
+import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.UbicacionElementoReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.entity.AdmiMarcaElemento;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.entity.AdmiModeloElemento;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.entity.AdmiTipoElemento;
@@ -84,6 +88,9 @@ public class ElementoConsumer {
 	@Autowired
 	ConsultasService consultasService;
 	
+	@Autowired
+	TransaccionesService transaccionesService;
+	
 	/**
 	 * Listener asincrónico kafka
 	 * 
@@ -95,8 +102,9 @@ public class ElementoConsumer {
 	 * @throws GenericException
 	 */
 	@KafkaListener(topics = CoreTecnicoConstants.TOPIC_ELEMENTO_ASYN, groupId = CoreTecnicoConstants.GROUP_ELEMENTO, containerFactory = "kafkaListenerContainerFactory")
-	public void elementoAsynchrotListener(KafkaRequest<?> kafkaRequest) throws GenericException {
-		log.info("Petición kafka asincrónico recibida: " + kafkaRequest.getOp());
+	public void elementoAsynchrotListener(KafkaRequest<?> kafkaRequest) throws Exception {
+		String idTransKafka = UUID.randomUUID().toString();
+		log.info("Petición kafka asincrónico recibida: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 		// EJECUCIONES ASINCRONICAS
 	}
 	
@@ -115,7 +123,7 @@ public class ElementoConsumer {
 	@SuppressWarnings("unchecked")
 	@KafkaListener(topics = CoreTecnicoConstants.TOPIC_ELEMENTO_SYNC, groupId = CoreTecnicoConstants.GROUP_ELEMENTO, containerFactory = "requestReplyListenerContainerFactory")
 	@SendTo()
-	public <T> KafkaResponse<T> elementoSynchroListener(KafkaRequest<?> kafkaRequest, Acknowledgment commitKafka) throws GenericException {
+	public <T> KafkaResponse<T> elementoSynchroListener(KafkaRequest<?> kafkaRequest, Acknowledgment commitKafka) throws Exception {
 		String idTransKafka = UUID.randomUUID().toString();
 		log.info("Petición kafka sincrónico recibida: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 		KafkaResponse<String> kafkaResponse = new KafkaResponse<String>();
@@ -427,6 +435,36 @@ public class ElementoConsumer {
 				// Fin Proceso logico
 				KafkaResponse<ElementoPorGrupoResDTO> response = new KafkaResponse<ElementoPorGrupoResDTO>();
 				response.setData(consultasService.elementoPorGrupo(requestService));
+				commitKafka.acknowledge();
+				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
+				return (KafkaResponse<T>) response;
+			} else if (kafkaRequest.getOp().equalsIgnoreCase(CoreTecnicoConstants.OP_LISTA_ELEMENTO_POR_DEPARTAMENTO_PARAMS)) {
+				ElementoKafkaReq data = Formato.mapearObjDeserializado(kafkaRequest.getData(), ElementoKafkaReq.class);
+				// Inicio Proceso logico
+				ElementoPorDepartamentoParamsReqDTO requestService = Formato.mapearObjDeserializado(data, ElementoPorDepartamentoParamsReqDTO.class);
+				// Fin Proceso logico
+				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
+				response.setData(elementoService.listaElementoPorDepartamentoParams(requestService));
+				commitKafka.acknowledge();
+				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
+				return (KafkaResponse<T>) response;
+			} else if (kafkaRequest.getOp().equalsIgnoreCase(CoreTecnicoConstants.OP_ASIGNAR_UBICACION_ELEMENTO)) {
+				UbicacionElementokafkaReq data = Formato.mapearObjDeserializado(kafkaRequest.getData(), UbicacionElementokafkaReq.class);
+				// Inicio Proceso logico
+				UbicacionElementoReqDTO requestService = Formato.mapearObjDeserializado(data, UbicacionElementoReqDTO.class);
+				// Fin Proceso logico
+				KafkaResponse<String> response = new KafkaResponse<String>();
+				response.setData(Arrays.asList(transaccionesService.asignarUbicacionElemento(requestService)));
+				commitKafka.acknowledge();
+				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
+				return (KafkaResponse<T>) response;
+			} else if (kafkaRequest.getOp().equalsIgnoreCase(CoreTecnicoConstants.OP_MODIFICAR_UBICACION_ELEMENTO)) {
+				UbicacionElementokafkaReq data = Formato.mapearObjDeserializado(kafkaRequest.getData(), UbicacionElementokafkaReq.class);
+				// Inicio Proceso logico
+				UbicacionElementoReqDTO requestService = Formato.mapearObjDeserializado(data, UbicacionElementoReqDTO.class);
+				// Fin Proceso logico
+				KafkaResponse<String> response = new KafkaResponse<String>();
+				response.setData(Arrays.asList(transaccionesService.modificarUbicacionElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
