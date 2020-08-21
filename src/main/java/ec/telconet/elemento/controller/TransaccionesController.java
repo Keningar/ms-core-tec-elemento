@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ec.telconet.elemento.service.TransaccionesService;
 import ec.telconet.microservicio.dependencia.util.response.GenericBasicResponse;
-import ec.telconet.microservicio.dependencia.util.response.GenericListResponse;
-import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.DatosVehiculoReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.UbicacionElementoReqDTO;
 
 /**

@@ -11,6 +11,7 @@ import ec.telconet.microservicio.dependencia.util.dto.PageDTO;
 import ec.telconet.microservicio.dependencia.util.response.GenericBasicResponse;
 import ec.telconet.microservicio.dependencia.util.response.GenericListResponse;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorCantonParamsReqDTO;
+import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorCuadrillaParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorDepartamentoParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorFilialParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorMonitorizadoReqDTO;
@@ -298,10 +299,30 @@ public class ElementoController {
 	 * @throws Exception
 	 */
 	@PostMapping(path = "listaElementoPorDepartamentoParams", consumes = "application/json")
-	public GenericListResponse<InfoElemento> listaElementoPorDepartamentoParams(@RequestBody ElementoPorDepartamentoParamsReqDTO request) throws Exception {
+	public GenericListResponse<InfoElemento> listaElementoPorDepartamentoParams(@RequestBody ElementoPorDepartamentoParamsReqDTO request)
+			throws Exception {
 		log.info("Petición recibida: listaElementoPorDepartamentoParams");
 		GenericListResponse<InfoElemento> response = new GenericListResponse<InfoElemento>();
 		response.setData(elementoService.listaElementoPorDepartamentoParams(request));
+		return response;
+	}
+	
+	/**
+	 * Método que retorna la lista de elementos por cuadrilla y params
+	 * 
+	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
+	 * @version 1.0
+	 * @since 21/08/2020
+	 * 
+	 * @param request {@linkplain ElementoPorCuadrillaParamsReqDTO}
+	 * @return {@linkplain GenericListResponse}
+	 * @throws Exception
+	 */
+	@PostMapping(path = "listaElementoPorCuadrillaParams", consumes = "application/json")
+	public GenericListResponse<InfoElemento> listaElementoPorCuadrillaParams(@RequestBody ElementoPorCuadrillaParamsReqDTO request) throws Exception {
+		log.info("Petición recibida: listaElementoPorCuadrillaParams");
+		GenericListResponse<InfoElemento> response = new GenericListResponse<InfoElemento>();
+		response.setData(elementoService.listaElementoPorCuadrillaParams(request));
 		return response;
 	}
 }

@@ -37,6 +37,7 @@ import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.Datos
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.DatosVehiculoResDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.DetalleElementoReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorCantonParamsReqDTO;
+import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorCuadrillaParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorDepartamentoParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorFilialParamsReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorGrupoReqDTO;
@@ -465,6 +466,16 @@ public class ElementoConsumer {
 				// Fin Proceso logico
 				KafkaResponse<String> response = new KafkaResponse<String>();
 				response.setData(Arrays.asList(transaccionesService.modificarUbicacionElemento(requestService)));
+				commitKafka.acknowledge();
+				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
+				return (KafkaResponse<T>) response;
+			} else if (kafkaRequest.getOp().equalsIgnoreCase(CoreTecnicoConstants.OP_LISTA_ELEMENTO_POR_CUADRILLA_PARAMS)) {
+				ElementoKafkaReq data = Formato.mapearObjDeserializado(kafkaRequest.getData(), ElementoKafkaReq.class);
+				// Inicio Proceso logico
+				ElementoPorCuadrillaParamsReqDTO requestService = Formato.mapearObjDeserializado(data, ElementoPorCuadrillaParamsReqDTO.class);
+				// Fin Proceso logico
+				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
+				response.setData(elementoService.listaElementoPorCuadrillaParams(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
