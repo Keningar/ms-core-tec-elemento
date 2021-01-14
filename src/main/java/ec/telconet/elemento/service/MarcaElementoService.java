@@ -31,7 +31,7 @@ public class MarcaElementoService {
 	 * @since 02/03/2020
 	 * 
 	 * @return List<AdmiMarcaElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<AdmiMarcaElemento> listaMarcaElemento() throws Exception {
@@ -47,7 +47,7 @@ public class MarcaElementoService {
 	 * 
 	 * @param request AdmiMarcaElemento
 	 * @return List<AdmiMarcaElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<AdmiMarcaElemento> listaMarcaElementoPor(AdmiMarcaElemento request) throws Exception {
@@ -63,7 +63,7 @@ public class MarcaElementoService {
 	 * 
 	 * @param request PageDTO<AdmiMarcaElemento>
 	 * @return Page<AdmiMarcaElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public Page<AdmiMarcaElemento> paginaListaMarcaElementoPor(PageDTO<AdmiMarcaElemento> request) throws Exception {

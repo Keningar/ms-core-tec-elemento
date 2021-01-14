@@ -39,12 +39,12 @@ public class MarcaElementoController {
 	 * @since 02/03/2020
 	 * 
 	 * @return {@linkplain GenericListResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@GetMapping("listaMarcaElemento")
 	public GenericListResponse<AdmiMarcaElemento> listaMarcaElemento() throws Exception {
 		log.info("Petición recibida: listaMarcaElemento");
-		GenericListResponse<AdmiMarcaElemento> response = new GenericListResponse<AdmiMarcaElemento>();
+		GenericListResponse<AdmiMarcaElemento> response = new GenericListResponse<>();
 		response.setData(marcaElementoService.listaMarcaElemento());
 		return response;
 	}
@@ -58,12 +58,12 @@ public class MarcaElementoController {
 	 * 
 	 * @param request {@linkplain AdmiMarcaElemento}
 	 * @return {@linkplain GenericListResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaMarcaElementoPor", consumes = "application/json")
 	public GenericListResponse<AdmiMarcaElemento> listaMarcaElementoPor(@RequestBody AdmiMarcaElemento request) throws Exception {
 		log.info("Petición recibida: listaMarcaElementoPor");
-		GenericListResponse<AdmiMarcaElemento> response = new GenericListResponse<AdmiMarcaElemento>();
+		GenericListResponse<AdmiMarcaElemento> response = new GenericListResponse<>();
 		response.setData(marcaElementoService.listaMarcaElementoPor(request));
 		return response;
 	}
@@ -77,13 +77,13 @@ public class MarcaElementoController {
 	 * 
 	 * @param request {@linkplain PageDTO}
 	 * @return {@linkplain GenericBasicResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "paginaListaMarcaElementoPor", consumes = "application/json")
 	public GenericBasicResponse<Page<AdmiMarcaElemento>> paginaListaMarcaElementoPor(@RequestBody PageDTO<AdmiMarcaElemento> request)
 			throws Exception {
 		log.info("Petición recibida: paginaListaMarcaElementoPor");
-		GenericBasicResponse<Page<AdmiMarcaElemento>> response = new GenericBasicResponse<Page<AdmiMarcaElemento>>();
+		GenericBasicResponse<Page<AdmiMarcaElemento>> response = new GenericBasicResponse<>();
 		response.setData(marcaElementoService.paginaListaMarcaElementoPor(request));
 		return response;
 	}

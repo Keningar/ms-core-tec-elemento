@@ -34,7 +34,7 @@ public class DetalleElementoService {
 	 * 
 	 * @param request InfoDetalleElemento
 	 * @return InfoDetalleElemento
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(rollbackFor = { Exception.class, GenericException.class }, value = "telconetTransactionManager")
 	public InfoDetalleElemento guardarDetalleElemento(InfoDetalleElemento request) throws Exception {
@@ -50,7 +50,7 @@ public class DetalleElementoService {
 	 * 
 	 * @param request InfoDetalleElemento
 	 * @return InfoDetalleElemento
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(rollbackFor = { Exception.class, GenericException.class }, value = "telconetTransactionManager")
 	public InfoDetalleElemento actualizarDetalleElemento(InfoDetalleElemento request) throws Exception {
@@ -66,7 +66,7 @@ public class DetalleElementoService {
 	 * 
 	 * @param request InfoDetalleElemento
 	 * @return Boolean
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(rollbackFor = { Exception.class, GenericException.class }, value = "telconetTransactionManager")
 	public Boolean eliminarDetalleElemento(InfoDetalleElemento request) throws Exception {
@@ -81,7 +81,7 @@ public class DetalleElementoService {
 	 * @since 02/03/2020
 	 * 
 	 * @return List<InfoDetalleElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoDetalleElemento> listaDetalleElemento() throws Exception {
@@ -97,7 +97,7 @@ public class DetalleElementoService {
 	 * 
 	 * @param request InfoDetalleElemento
 	 * @return List<InfoDetalleElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoDetalleElemento> listaDetalleElementoPor(InfoDetalleElemento request) throws Exception {
@@ -113,7 +113,7 @@ public class DetalleElementoService {
 	 * 
 	 * @param request PageDTO<InfoDetalleElemento>
 	 * @return Page<InfoDetalleElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public Page<InfoDetalleElemento> paginaListaDetalleElementoPor(PageDTO<InfoDetalleElemento> request) throws Exception {
@@ -129,7 +129,7 @@ public class DetalleElementoService {
 	 * 
 	 * @param request DetalleElementoReqDTO
 	 * @return List<InfoDetalleElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoDetalleElemento> listaDetalleElementoPorElemento(DetalleElementoReqDTO request) throws Exception {

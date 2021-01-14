@@ -36,12 +36,12 @@ public class TransaccionesController {
 	 * 
 	 * @param request {@linkplain UbicacionElementoReqDTO}
 	 * @return {@linkplain GenericBasicResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "asignarUbicacionElemento", consumes = "application/json")
 	public GenericBasicResponse<String> asignarUbicacionElemento(@RequestBody UbicacionElementoReqDTO request) throws Exception {
 		log.info("Petición recibida: asignarUbicacionElemento");
-		GenericBasicResponse<String> response = new GenericBasicResponse<String>();
+		GenericBasicResponse<String> response = new GenericBasicResponse<>();
 		response.setData(transaccionesService.asignarUbicacionElemento(request));
 		return response;
 	}
@@ -55,12 +55,12 @@ public class TransaccionesController {
 	 * 
 	 * @param request {@linkplain UbicacionElementoReqDTO}
 	 * @return {@linkplain GenericBasicResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "modificarUbicacionElemento", consumes = "application/json")
 	public GenericBasicResponse<String> modificarUbicacionElemento(@RequestBody UbicacionElementoReqDTO request) throws Exception {
 		log.info("Petición recibida: modificarUbicacionElemento");
-		GenericBasicResponse<String> response = new GenericBasicResponse<String>();
+		GenericBasicResponse<String> response = new GenericBasicResponse<>();
 		response.setData(transaccionesService.modificarUbicacionElemento(request));
 		return response;
 	}

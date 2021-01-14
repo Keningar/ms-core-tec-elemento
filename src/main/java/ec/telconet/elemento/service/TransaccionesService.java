@@ -28,7 +28,7 @@ public class TransaccionesService {
 	 * 
 	 * @param request UbicacionElementoReqDTO
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public String asignarUbicacionElemento(UbicacionElementoReqDTO request) throws Exception {
@@ -44,7 +44,7 @@ public class TransaccionesService {
 	 * 
 	 * @param request UbicacionElementoReqDTO
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public String modificarUbicacionElemento(UbicacionElementoReqDTO request) throws Exception {

@@ -39,12 +39,12 @@ public class HistorialElementoController {
 	 * 
 	 * @param request {@linkplain InfoHistorialElemento}
 	 * @return {@linkplain GenericBasicResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "guardarHistorialElemento", consumes = "application/json")
 	public GenericBasicResponse<InfoHistorialElemento> guardarHistorialElemento(@RequestBody InfoHistorialElemento request) throws Exception {
 		log.info("Petición recibida: guardarHistorialElemento");
-		GenericBasicResponse<InfoHistorialElemento> response = new GenericBasicResponse<InfoHistorialElemento>();
+		GenericBasicResponse<InfoHistorialElemento> response = new GenericBasicResponse<>();
 		response.setData(historialElementoService.guardarHistorialElemento(request));
 		return response;
 	}
@@ -58,13 +58,13 @@ public class HistorialElementoController {
 	 * 
 	 * @param request {@linkplain HistorialElementoReqDTO}
 	 * @return {@linkplain GenericListResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaHistorialElementoPorElemento", consumes = "application/json")
 	public GenericListResponse<InfoHistorialElemento> listaHistorialElementoPorElemento(@RequestBody HistorialElementoReqDTO request)
 			throws Exception {
 		log.info("Petición recibida: listaHistorialElementoPorElemento");
-		GenericListResponse<InfoHistorialElemento> response = new GenericListResponse<InfoHistorialElemento>();
+		GenericListResponse<InfoHistorialElemento> response = new GenericListResponse<>();
 		response.setData(historialElementoService.listaHistorialElementoPorElemento(request));
 		return response;
 	}
@@ -78,13 +78,13 @@ public class HistorialElementoController {
 	 * 
 	 * @param request {@linkplain HistorialElementoPorFechaReqDTO}
 	 * @return {@linkplain GenericListResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaHistorialElementoPorFecha", consumes = "application/json")
 	public GenericListResponse<InfoHistorialElemento> listaHistorialElementoPorFecha(@RequestBody HistorialElementoPorFechaReqDTO request)
 			throws Exception {
 		log.info("Petición recibida: listaHistorialElementoPorFecha");
-		GenericListResponse<InfoHistorialElemento> response = new GenericListResponse<InfoHistorialElemento>();
+		GenericListResponse<InfoHistorialElemento> response = new GenericListResponse<>();
 		response.setData(historialElementoService.listaHistorialElementoPorFecha(request));
 		return response;
 	}

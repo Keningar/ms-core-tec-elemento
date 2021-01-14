@@ -31,7 +31,7 @@ public class ElementoApplication {
 	 */
 	@Bean
 	public ServletRegistrationBean<DispatcherServlet> dispatcherRegistration(DispatcherServlet dispatcherServlet) {
-		ServletRegistrationBean<DispatcherServlet> bean = new ServletRegistrationBean<DispatcherServlet>(dispatcherServlet, "/elemento/*");
+		ServletRegistrationBean<DispatcherServlet> bean = new ServletRegistrationBean<>(dispatcherServlet, "/elemento/*");
 		bean.setAsyncSupported(true);
 		bean.setName("elemento");
 		bean.setLoadOnStartup(1);

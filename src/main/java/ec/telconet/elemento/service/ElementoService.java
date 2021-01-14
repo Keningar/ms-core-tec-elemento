@@ -42,7 +42,7 @@ public class ElementoService {
 	 * 
 	 * @param request InfoElemento
 	 * @return InfoElemento
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(rollbackFor = { Exception.class, GenericException.class }, value = "telconetTransactionManager")
 	public InfoElemento guardarElemento(InfoElemento request) throws Exception {
@@ -58,7 +58,7 @@ public class ElementoService {
 	 * 
 	 * @param request InfoElemento
 	 * @return InfoElemento
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(rollbackFor = { Exception.class, GenericException.class }, value = "telconetTransactionManager")
 	public InfoElemento actualizarElemento(InfoElemento request) throws Exception {
@@ -74,7 +74,7 @@ public class ElementoService {
 	 * 
 	 * @param request ElementoPorTipoReqDTO
 	 * @return List<InfoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoElemento> listaElementoPorTipo(ElementoPorTipoReqDTO request) throws Exception {
@@ -89,7 +89,7 @@ public class ElementoService {
 	 * @since 02/03/2020
 	 * 
 	 * @return List<InfoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoElemento> listaElemento() throws Exception {
@@ -105,7 +105,7 @@ public class ElementoService {
 	 * 
 	 * @param request InfoElemento
 	 * @return List<InfoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoElemento> listaElementoPor(InfoElemento request) throws Exception {
@@ -121,7 +121,7 @@ public class ElementoService {
 	 * 
 	 * @param request PageDTO<InfoElemento>
 	 * @return Page<InfoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public Page<InfoElemento> paginaListaElementoPor(PageDTO<InfoElemento> request) throws Exception {
@@ -137,7 +137,7 @@ public class ElementoService {
 	 * 
 	 * @param request InfoElemento
 	 * @return Boolean
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(rollbackFor = { Exception.class, GenericException.class }, value = "telconetTransactionManager")
 	public Boolean eliminarElemento(InfoElemento request) throws Exception {
@@ -153,7 +153,7 @@ public class ElementoService {
 	 * 
 	 * @param request ElementoPorMonitorizadoReqDTO
 	 * @return List<InfoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoElemento> listaElementoPorEsMonitorizado(ElementoPorMonitorizadoReqDTO request) throws Exception {
@@ -169,7 +169,7 @@ public class ElementoService {
 	 * 
 	 * @param request ElementoPorRegionParamsReqDTO
 	 * @return List<InfoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoElemento> listaElementoPorRegionParams(ElementoPorRegionParamsReqDTO request) throws Exception {
@@ -185,7 +185,7 @@ public class ElementoService {
 	 * 
 	 * @param request ElementoPorProvinciaParamsReqDTO
 	 * @return List<InfoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoElemento> listaElementoPorProvinciaParams(ElementoPorProvinciaParamsReqDTO request) throws Exception {
@@ -201,7 +201,7 @@ public class ElementoService {
 	 * 
 	 * @param request ElementoPorParroquiaParamsReqDTO
 	 * @return List<InfoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoElemento> listaElementoPorParroquiaParams(ElementoPorParroquiaParamsReqDTO request) throws Exception {
@@ -217,7 +217,7 @@ public class ElementoService {
 	 * 
 	 * @param request ElementoPorCantonParamsReqDTO
 	 * @return List<InfoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoElemento> listaElementoPorCantonParams(ElementoPorCantonParamsReqDTO request) throws Exception {
@@ -233,7 +233,7 @@ public class ElementoService {
 	 * 
 	 * @param request ElementoPorFilialParamsReqDTO
 	 * @return List<InfoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoElemento> listaElementoPorFilialParams(ElementoPorFilialParamsReqDTO request) throws Exception {
@@ -249,7 +249,7 @@ public class ElementoService {
 	 * 
 	 * @param request ElementoPorDepartamentoParamsReqDTO
 	 * @return List<InfoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoElemento> listaElementoPorDepartamentoParams(ElementoPorDepartamentoParamsReqDTO request) throws Exception {
@@ -265,7 +265,7 @@ public class ElementoService {
 	 * 
 	 * @param request ElementoPorCuadrillaParamsReqDTO
 	 * @return List<InfoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoElemento> listaElementoPorCuadrillaParams(ElementoPorCuadrillaParamsReqDTO request) throws Exception {

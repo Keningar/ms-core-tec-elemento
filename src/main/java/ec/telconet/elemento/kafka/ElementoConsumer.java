@@ -1,6 +1,6 @@
 package ec.telconet.elemento.kafka;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
@@ -99,11 +99,10 @@ public class ElementoConsumer {
 	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
-	 * @param kafkaRequest
-	 * @throws GenericException
-	 */
+	 * @param kafkaRequest Request Kafka
+     */
 	@KafkaListener(topics = CoreTecnicoConstants.TOPIC_ELEMENTO_ASYN, groupId = CoreTecnicoConstants.GROUP_ELEMENTO, containerFactory = "kafkaListenerContainerFactory")
-	public void elementoAsynchrotListener(KafkaRequest<?> kafkaRequest) throws Exception {
+	public void elementoAsynchrotListener(KafkaRequest<?> kafkaRequest) {
 		String idTransKafka = UUID.randomUUID().toString();
 		log.info("Petición kafka asincrónico recibida: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 		// EJECUCIONES ASINCRONICAS
@@ -117,25 +116,24 @@ public class ElementoConsumer {
 	 * @since 02/03/2020
 	 * 
 	 * @param <T>          Objeto de respuesta
-	 * @param kafkaRequest
+	 * @param kafkaRequest Request Kafka
 	 * @return KafkaResponse
-	 * @throws GenericException
-	 */
+     */
 	@SuppressWarnings("unchecked")
 	@KafkaListener(topics = CoreTecnicoConstants.TOPIC_ELEMENTO_SYNC, groupId = CoreTecnicoConstants.GROUP_ELEMENTO, containerFactory = "requestReplyListenerContainerFactory")
 	@SendTo()
-	public <T> KafkaResponse<T> elementoSynchroListener(KafkaRequest<?> kafkaRequest, Acknowledgment commitKafka) throws Exception {
+	public <T> KafkaResponse<T> elementoSynchroListener(KafkaRequest<?> kafkaRequest, Acknowledgment commitKafka) {
 		String idTransKafka = UUID.randomUUID().toString();
 		log.info("Petición kafka sincrónico recibida: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
-		KafkaResponse<String> kafkaResponse = new KafkaResponse<String>();
+		KafkaResponse<String> kafkaResponse = new KafkaResponse<>();
 		try {
 			if (kafkaRequest.getOp().equalsIgnoreCase(CoreTecnicoConstants.OP_GUARDAR_DETALLE_ELEMENTO)) {
 				DetalleElementoKafkaReq data = Formato.mapearObjDeserializado(kafkaRequest.getData(), DetalleElementoKafkaReq.class);
 				// Inicio Proceso logico
 				InfoDetalleElemento requestService = Formato.mapearObjDeserializado(data, InfoDetalleElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoDetalleElemento> response = new KafkaResponse<InfoDetalleElemento>();
-				response.setData(Arrays.asList(detalleElementoService.guardarDetalleElemento(requestService)));
+				KafkaResponse<InfoDetalleElemento> response = new KafkaResponse<>();
+				response.setData(Collections.singletonList(detalleElementoService.guardarDetalleElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
@@ -144,8 +142,8 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				InfoDetalleElemento requestService = Formato.mapearObjDeserializado(data, InfoDetalleElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoDetalleElemento> response = new KafkaResponse<InfoDetalleElemento>();
-				response.setData(Arrays.asList(detalleElementoService.actualizarDetalleElemento(requestService)));
+				KafkaResponse<InfoDetalleElemento> response = new KafkaResponse<>();
+				response.setData(Collections.singletonList(detalleElementoService.actualizarDetalleElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
@@ -154,13 +152,13 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				InfoDetalleElemento requestService = Formato.mapearObjDeserializado(data, InfoDetalleElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<Boolean> response = new KafkaResponse<Boolean>();
-				response.setData(Arrays.asList(detalleElementoService.eliminarDetalleElemento(requestService)));
+				KafkaResponse<Boolean> response = new KafkaResponse<>();
+				response.setData(Collections.singletonList(detalleElementoService.eliminarDetalleElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
 			} else if (kafkaRequest.getOp().equalsIgnoreCase(CoreTecnicoConstants.OP_LISTA_DETALLE_ELEMENTO)) {
-				KafkaResponse<InfoDetalleElemento> response = new KafkaResponse<InfoDetalleElemento>();
+				KafkaResponse<InfoDetalleElemento> response = new KafkaResponse<>();
 				response.setData(detalleElementoService.listaDetalleElemento());
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -170,7 +168,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				InfoDetalleElemento requestService = Formato.mapearObjDeserializado(data, InfoDetalleElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoDetalleElemento> response = new KafkaResponse<InfoDetalleElemento>();
+				KafkaResponse<InfoDetalleElemento> response = new KafkaResponse<>();
 				response.setData(detalleElementoService.listaDetalleElementoPor(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -180,7 +178,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				DetalleElementoReqDTO requestService = Formato.mapearObjDeserializado(data, DetalleElementoReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoDetalleElemento> response = new KafkaResponse<InfoDetalleElemento>();
+				KafkaResponse<InfoDetalleElemento> response = new KafkaResponse<>();
 				response.setData(detalleElementoService.listaDetalleElementoPorElemento(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -190,8 +188,8 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				InfoElemento requestService = Formato.mapearObjDeserializado(data, InfoElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
-				response.setData(Arrays.asList(elementoService.guardarElemento(requestService)));
+				KafkaResponse<InfoElemento> response = new KafkaResponse<>();
+				response.setData(Collections.singletonList(elementoService.guardarElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
@@ -200,8 +198,8 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				InfoElemento requestService = Formato.mapearObjDeserializado(data, InfoElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
-				response.setData(Arrays.asList(elementoService.actualizarElemento(requestService)));
+				KafkaResponse<InfoElemento> response = new KafkaResponse<>();
+				response.setData(Collections.singletonList(elementoService.actualizarElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
@@ -210,13 +208,13 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				InfoElemento requestService = Formato.mapearObjDeserializado(data, InfoElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<Boolean> response = new KafkaResponse<Boolean>();
-				response.setData(Arrays.asList(elementoService.eliminarElemento(requestService)));
+				KafkaResponse<Boolean> response = new KafkaResponse<>();
+				response.setData(Collections.singletonList(elementoService.eliminarElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
 			} else if (kafkaRequest.getOp().equalsIgnoreCase(CoreTecnicoConstants.OP_LISTA_ELEMENTO)) {
-				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
+				KafkaResponse<InfoElemento> response = new KafkaResponse<>();
 				response.setData(elementoService.listaElemento());
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -226,7 +224,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				InfoElemento requestService = Formato.mapearObjDeserializado(data, InfoElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
+				KafkaResponse<InfoElemento> response = new KafkaResponse<>();
 				response.setData(elementoService.listaElementoPor(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -236,7 +234,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				ElementoPorTipoReqDTO requestService = Formato.mapearObjDeserializado(data, ElementoPorTipoReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
+				KafkaResponse<InfoElemento> response = new KafkaResponse<>();
 				response.setData(elementoService.listaElementoPorTipo(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -246,7 +244,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				ElementoPorMonitorizadoReqDTO requestService = Formato.mapearObjDeserializado(data, ElementoPorMonitorizadoReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
+				KafkaResponse<InfoElemento> response = new KafkaResponse<>();
 				response.setData(elementoService.listaElementoPorEsMonitorizado(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -256,7 +254,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				ElementoPorRegionParamsReqDTO requestService = Formato.mapearObjDeserializado(data, ElementoPorRegionParamsReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
+				KafkaResponse<InfoElemento> response = new KafkaResponse<>();
 				response.setData(elementoService.listaElementoPorRegionParams(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -266,7 +264,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				ElementoPorProvinciaParamsReqDTO requestService = Formato.mapearObjDeserializado(data, ElementoPorProvinciaParamsReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
+				KafkaResponse<InfoElemento> response = new KafkaResponse<>();
 				response.setData(elementoService.listaElementoPorProvinciaParams(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -276,7 +274,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				ElementoPorParroquiaParamsReqDTO requestService = Formato.mapearObjDeserializado(data, ElementoPorParroquiaParamsReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
+				KafkaResponse<InfoElemento> response = new KafkaResponse<>();
 				response.setData(elementoService.listaElementoPorParroquiaParams(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -286,7 +284,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				ElementoPorCantonParamsReqDTO requestService = Formato.mapearObjDeserializado(data, ElementoPorCantonParamsReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
+				KafkaResponse<InfoElemento> response = new KafkaResponse<>();
 				response.setData(elementoService.listaElementoPorCantonParams(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -296,7 +294,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				ElementoPorFilialParamsReqDTO requestService = Formato.mapearObjDeserializado(data, ElementoPorFilialParamsReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
+				KafkaResponse<InfoElemento> response = new KafkaResponse<>();
 				response.setData(elementoService.listaElementoPorFilialParams(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -306,8 +304,8 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				InfoHistorialElemento requestService = Formato.mapearObjDeserializado(data, InfoHistorialElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoHistorialElemento> response = new KafkaResponse<InfoHistorialElemento>();
-				response.setData(Arrays.asList(historialElementoService.guardarHistorialElemento(requestService)));
+				KafkaResponse<InfoHistorialElemento> response = new KafkaResponse<>();
+				response.setData(Collections.singletonList(historialElementoService.guardarHistorialElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
@@ -316,7 +314,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				HistorialElementoReqDTO requestService = Formato.mapearObjDeserializado(data, HistorialElementoReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoHistorialElemento> response = new KafkaResponse<InfoHistorialElemento>();
+				KafkaResponse<InfoHistorialElemento> response = new KafkaResponse<>();
 				response.setData(historialElementoService.listaHistorialElementoPorElemento(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -326,13 +324,13 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				HistorialElementoPorFechaReqDTO requestService = Formato.mapearObjDeserializado(data, HistorialElementoPorFechaReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoHistorialElemento> response = new KafkaResponse<InfoHistorialElemento>();
+				KafkaResponse<InfoHistorialElemento> response = new KafkaResponse<>();
 				response.setData(historialElementoService.listaHistorialElementoPorFecha(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
 			} else if (kafkaRequest.getOp().equalsIgnoreCase(CoreTecnicoConstants.OP_LISTA_MARCA_ELEMENTO)) {
-				KafkaResponse<AdmiMarcaElemento> response = new KafkaResponse<AdmiMarcaElemento>();
+				KafkaResponse<AdmiMarcaElemento> response = new KafkaResponse<>();
 				response.setData(marcaElementoService.listaMarcaElemento());
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -342,7 +340,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				AdmiMarcaElemento requestService = Formato.mapearObjDeserializado(data, AdmiMarcaElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<AdmiMarcaElemento> response = new KafkaResponse<AdmiMarcaElemento>();
+				KafkaResponse<AdmiMarcaElemento> response = new KafkaResponse<>();
 				response.setData(marcaElementoService.listaMarcaElementoPor(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -352,13 +350,13 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				AdmiModeloElemento requestService = Formato.mapearObjDeserializado(data, AdmiModeloElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<AdmiModeloElemento> response = new KafkaResponse<AdmiModeloElemento>();
-				response.setData(Arrays.asList(modeloElementoService.guardarModeloElemento(requestService)));
+				KafkaResponse<AdmiModeloElemento> response = new KafkaResponse<>();
+				response.setData(Collections.singletonList(modeloElementoService.guardarModeloElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
 			} else if (kafkaRequest.getOp().equalsIgnoreCase(CoreTecnicoConstants.OP_LISTA_MODELO_ELEMENTO)) {
-				KafkaResponse<AdmiModeloElemento> response = new KafkaResponse<AdmiModeloElemento>();
+				KafkaResponse<AdmiModeloElemento> response = new KafkaResponse<>();
 				response.setData(modeloElementoService.listaModeloElemento());
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -368,7 +366,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				AdmiModeloElemento requestService = Formato.mapearObjDeserializado(data, AdmiModeloElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<AdmiModeloElemento> response = new KafkaResponse<AdmiModeloElemento>();
+				KafkaResponse<AdmiModeloElemento> response = new KafkaResponse<>();
 				response.setData(modeloElementoService.listaModeloElementoPor(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -378,8 +376,8 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				AdmiTipoElemento requestService = Formato.mapearObjDeserializado(data, AdmiTipoElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<AdmiTipoElemento> response = new KafkaResponse<AdmiTipoElemento>();
-				response.setData(Arrays.asList(tipoElementoService.guardarTipoElemento(requestService)));
+				KafkaResponse<AdmiTipoElemento> response = new KafkaResponse<>();
+				response.setData(Collections.singletonList(tipoElementoService.guardarTipoElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
@@ -388,8 +386,8 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				AdmiTipoElemento requestService = Formato.mapearObjDeserializado(data, AdmiTipoElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<AdmiTipoElemento> response = new KafkaResponse<AdmiTipoElemento>();
-				response.setData(Arrays.asList(tipoElementoService.actualizarTipoElemento(requestService)));
+				KafkaResponse<AdmiTipoElemento> response = new KafkaResponse<>();
+				response.setData(Collections.singletonList(tipoElementoService.actualizarTipoElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
@@ -398,13 +396,13 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				AdmiTipoElemento requestService = Formato.mapearObjDeserializado(data, AdmiTipoElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<Boolean> response = new KafkaResponse<Boolean>();
-				response.setData(Arrays.asList(tipoElementoService.eliminarTipoElemento(requestService)));
+				KafkaResponse<Boolean> response = new KafkaResponse<>();
+				response.setData(Collections.singletonList(tipoElementoService.eliminarTipoElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
 			} else if (kafkaRequest.getOp().equalsIgnoreCase(CoreTecnicoConstants.OP_LISTA_TIPO_ELEMENTO)) {
-				KafkaResponse<AdmiTipoElemento> response = new KafkaResponse<AdmiTipoElemento>();
+				KafkaResponse<AdmiTipoElemento> response = new KafkaResponse<>();
 				response.setData(tipoElementoService.listaTipoElemento());
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -414,7 +412,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				AdmiTipoElemento requestService = Formato.mapearObjDeserializado(data, AdmiTipoElemento.class);
 				// Fin Proceso logico
-				KafkaResponse<AdmiTipoElemento> response = new KafkaResponse<AdmiTipoElemento>();
+				KafkaResponse<AdmiTipoElemento> response = new KafkaResponse<>();
 				response.setData(tipoElementoService.listaTipoElementoPor(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -424,7 +422,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				DatosVehiculoReqDTO requestService = Formato.mapearObjDeserializado(data, DatosVehiculoReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<DatosVehiculoResDTO> response = new KafkaResponse<DatosVehiculoResDTO>();
+				KafkaResponse<DatosVehiculoResDTO> response = new KafkaResponse<>();
 				response.setData(consultasService.datosVehiculo(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -434,7 +432,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				ElementoPorGrupoReqDTO requestService = Formato.mapearObjDeserializado(data, ElementoPorGrupoReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<ElementoPorGrupoResDTO> response = new KafkaResponse<ElementoPorGrupoResDTO>();
+				KafkaResponse<ElementoPorGrupoResDTO> response = new KafkaResponse<>();
 				response.setData(consultasService.elementoPorGrupo(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -444,7 +442,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				ElementoPorDepartamentoParamsReqDTO requestService = Formato.mapearObjDeserializado(data, ElementoPorDepartamentoParamsReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
+				KafkaResponse<InfoElemento> response = new KafkaResponse<>();
 				response.setData(elementoService.listaElementoPorDepartamentoParams(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
@@ -454,8 +452,8 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				UbicacionElementoReqDTO requestService = Formato.mapearObjDeserializado(data, UbicacionElementoReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<String> response = new KafkaResponse<String>();
-				response.setData(Arrays.asList(transaccionesService.asignarUbicacionElemento(requestService)));
+				KafkaResponse<String> response = new KafkaResponse<>();
+				response.setData(Collections.singletonList(transaccionesService.asignarUbicacionElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
@@ -464,8 +462,8 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				UbicacionElementoReqDTO requestService = Formato.mapearObjDeserializado(data, UbicacionElementoReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<String> response = new KafkaResponse<String>();
-				response.setData(Arrays.asList(transaccionesService.modificarUbicacionElemento(requestService)));
+				KafkaResponse<String> response = new KafkaResponse<>();
+				response.setData(Collections.singletonList(transaccionesService.modificarUbicacionElemento(requestService)));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 				return (KafkaResponse<T>) response;
@@ -474,7 +472,7 @@ public class ElementoConsumer {
 				// Inicio Proceso logico
 				ElementoPorCuadrillaParamsReqDTO requestService = Formato.mapearObjDeserializado(data, ElementoPorCuadrillaParamsReqDTO.class);
 				// Fin Proceso logico
-				KafkaResponse<InfoElemento> response = new KafkaResponse<InfoElemento>();
+				KafkaResponse<InfoElemento> response = new KafkaResponse<>();
 				response.setData(elementoService.listaElementoPorCuadrillaParams(requestService));
 				commitKafka.acknowledge();
 				log.info("Petición kafka sincrónico enviada: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);

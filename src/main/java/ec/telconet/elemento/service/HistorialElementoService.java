@@ -33,7 +33,7 @@ public class HistorialElementoService {
 	 * 
 	 * @param request InfoHistorialElemento
 	 * @return InfoHistorialElemento
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(rollbackFor = { Exception.class, GenericException.class }, value = "telconetTransactionManager")
 	public InfoHistorialElemento guardarHistorialElemento(InfoHistorialElemento request) throws Exception {
@@ -49,7 +49,7 @@ public class HistorialElementoService {
 	 * 
 	 * @param request HistorialElementoReqDTO
 	 * @return List<InfoHistorialElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoHistorialElemento> listaHistorialElementoPorElemento(HistorialElementoReqDTO request) throws Exception {
@@ -65,7 +65,7 @@ public class HistorialElementoService {
 	 * 
 	 * @param request HistorialElementoPorFechaReqDTO
 	 * @return List<InfoHistorialElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<InfoHistorialElemento> listaHistorialElementoPorFecha(HistorialElementoPorFechaReqDTO request) throws Exception {

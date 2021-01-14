@@ -33,7 +33,7 @@ public class ConsultasService {
 	 * 
 	 * @param request DatosVehiculoReqDTO
 	 * @return List<DatosVehiculoResDTO>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<DatosVehiculoResDTO> datosVehiculo(DatosVehiculoReqDTO request) throws Exception {
@@ -49,7 +49,7 @@ public class ConsultasService {
 	 * 
 	 * @param request ElementoPorGrupoReqDTO
 	 * @return List<ElementoPorGrupoResDTO>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<ElementoPorGrupoResDTO> elementoPorGrupo(ElementoPorGrupoReqDTO request) throws Exception {

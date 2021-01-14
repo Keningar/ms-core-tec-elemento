@@ -40,12 +40,12 @@ public class TipoElementoController {
 	 * 
 	 * @param request {@linkplain AdmiTipoElemento}
 	 * @return {@linkplain GenericBasicResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "guardarTipoElemento", consumes = "application/json")
 	public GenericBasicResponse<AdmiTipoElemento> guardarTipoElemento(@RequestBody AdmiTipoElemento request) throws Exception {
 		log.info("Petición recibida: guardarTipoElemento");
-		GenericBasicResponse<AdmiTipoElemento> response = new GenericBasicResponse<AdmiTipoElemento>();
+		GenericBasicResponse<AdmiTipoElemento> response = new GenericBasicResponse<>();
 		response.setData(tipoElementoService.guardarTipoElemento(request));
 		return response;
 	}
@@ -59,12 +59,12 @@ public class TipoElementoController {
 	 * 
 	 * @param request {@linkplain AdmiTipoElemento}
 	 * @return {@linkplain GenericBasicResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "actualizarTipoElemento", consumes = "application/json")
 	public GenericBasicResponse<AdmiTipoElemento> actualizarTipoElemento(@RequestBody AdmiTipoElemento request) throws Exception {
 		log.info("Petición recibida: actualizarTipoElemento");
-		GenericBasicResponse<AdmiTipoElemento> response = new GenericBasicResponse<AdmiTipoElemento>();
+		GenericBasicResponse<AdmiTipoElemento> response = new GenericBasicResponse<>();
 		response.setData(tipoElementoService.actualizarTipoElemento(request));
 		return response;
 	}
@@ -78,12 +78,12 @@ public class TipoElementoController {
 	 * 
 	 * @param request {@linkplain AdmiTipoElemento}
 	 * @return {@linkplain GenericBasicResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "eliminarTipoElemento", consumes = "application/json")
 	public GenericBasicResponse<Boolean> eliminarTipoElemento(@RequestBody AdmiTipoElemento request) throws Exception {
 		log.info("Petición recibida: eliminarTipoElemento");
-		GenericBasicResponse<Boolean> response = new GenericBasicResponse<Boolean>();
+		GenericBasicResponse<Boolean> response = new GenericBasicResponse<>();
 		response.setData(tipoElementoService.eliminarTipoElemento(request));
 		return response;
 	}
@@ -96,12 +96,12 @@ public class TipoElementoController {
 	 * @since 02/03/2020
 	 * 
 	 * @return {@linkplain GenericListResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@GetMapping("listaTipoElemento")
 	public GenericListResponse<AdmiTipoElemento> listaTipoElemento() throws Exception {
 		log.info("Petición recibida: listaTipoElemento");
-		GenericListResponse<AdmiTipoElemento> response = new GenericListResponse<AdmiTipoElemento>();
+		GenericListResponse<AdmiTipoElemento> response = new GenericListResponse<>();
 		response.setData(tipoElementoService.listaTipoElemento());
 		return response;
 	}
@@ -115,12 +115,12 @@ public class TipoElementoController {
 	 * 
 	 * @param request {@linkplain AdmiTipoElemento}
 	 * @return {@linkplain GenericListResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaTipoElementoPor", consumes = "application/json")
 	public GenericListResponse<AdmiTipoElemento> listaTipoElementoPor(@RequestBody AdmiTipoElemento request) throws Exception {
 		log.info("Petición recibida: listaTipoElementoPor");
-		GenericListResponse<AdmiTipoElemento> response = new GenericListResponse<AdmiTipoElemento>();
+		GenericListResponse<AdmiTipoElemento> response = new GenericListResponse<>();
 		response.setData(tipoElementoService.listaTipoElementoPor(request));
 		return response;
 	}
@@ -134,12 +134,12 @@ public class TipoElementoController {
 	 * 
 	 * @param request {@linkplain PageDTO}
 	 * @return {@linkplain GenericBasicResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "paginaListaTipoElementoPor", consumes = "application/json")
 	public GenericBasicResponse<Page<AdmiTipoElemento>> paginaListaTipoElementoPor(@RequestBody PageDTO<AdmiTipoElemento> request) throws Exception {
 		log.info("Petición recibida: paginaListaTipoElementoPor");
-		GenericBasicResponse<Page<AdmiTipoElemento>> response = new GenericBasicResponse<Page<AdmiTipoElemento>>();
+		GenericBasicResponse<Page<AdmiTipoElemento>> response = new GenericBasicResponse<>();
 		response.setData(tipoElementoService.paginaListaTipoElementoPor(request));
 		return response;
 	}

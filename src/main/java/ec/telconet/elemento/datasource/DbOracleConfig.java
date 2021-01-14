@@ -57,8 +57,8 @@ public class DbOracleConfig {
 	@Value("${spring.datasource.hikari.max-lifetime}")
 	private int maxLifetime;
 	
-	private final Map<String, Object> hibernateProperties() {
-		Map<String, Object> hibernateProperties = new LinkedHashMap<String, Object>();
+	private Map<String, Object> hibernateProperties() {
+		Map<String, Object> hibernateProperties = new LinkedHashMap<>();
 		hibernateProperties.put("hibernate.connection.release_mode", "auto");
 		return hibernateProperties;
 	}
@@ -73,7 +73,7 @@ public class DbOracleConfig {
 	@Primary
 	@Bean(name = "dsInfraestructuraProperties")
 	public HikariConfig dsInfraestructuraConfig() throws Exception {
-		ArrayList<String> listaConexiones = new ArrayList<String>();
+		ArrayList<String> listaConexiones = new ArrayList<>();
 		listaConexiones.add("infraestructura");
 		HikariConfig dataSourceConfig = configdb.getConfig(listaConexiones, hostParameters, rutaParametersLocal);
 		dataSourceConfig.setPoolName("dsInfraestructura");

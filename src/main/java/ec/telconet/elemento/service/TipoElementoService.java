@@ -33,7 +33,7 @@ public class TipoElementoService {
 	 * 
 	 * @param request AdmiTipoElemento
 	 * @return AdmiTipoElemento
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(rollbackFor = { Exception.class, GenericException.class }, value = "telconetTransactionManager")
 	public AdmiTipoElemento guardarTipoElemento(AdmiTipoElemento request) throws Exception {
@@ -49,7 +49,7 @@ public class TipoElementoService {
 	 * 
 	 * @param request AdmiTipoElemento
 	 * @return AdmiTipoElemento
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(rollbackFor = { Exception.class, GenericException.class }, value = "telconetTransactionManager")
 	public AdmiTipoElemento actualizarTipoElemento(AdmiTipoElemento request) throws Exception {
@@ -65,7 +65,7 @@ public class TipoElementoService {
 	 * 
 	 * @param request AdmiTipoElemento
 	 * @return Boolean
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(rollbackFor = { Exception.class, GenericException.class }, value = "telconetTransactionManager")
 	public Boolean eliminarTipoElemento(AdmiTipoElemento request) throws Exception {
@@ -80,7 +80,7 @@ public class TipoElementoService {
 	 * @since 02/03/2020
 	 * 
 	 * @return List<AdmiTipoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<AdmiTipoElemento> listaTipoElemento() throws Exception {
@@ -96,7 +96,7 @@ public class TipoElementoService {
 	 * 
 	 * @param request AdmiTipoElemento
 	 * @return List<AdmiTipoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<AdmiTipoElemento> listaTipoElementoPor(AdmiTipoElemento request) throws Exception {
@@ -112,7 +112,7 @@ public class TipoElementoService {
 	 * 
 	 * @param request PageDTO<AdmiTipoElemento>
 	 * @return Page<AdmiTipoElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public Page<AdmiTipoElemento> paginaListaTipoElementoPor(PageDTO<AdmiTipoElemento> request) throws Exception {

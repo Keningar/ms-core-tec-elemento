@@ -40,12 +40,12 @@ public class ModeloElementoController {
 	 * 
 	 * @param request {@linkplain AdmiModeloElemento}
 	 * @return {@linkplain GenericBasicResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "guardarModeloElemento", consumes = "application/json")
 	public GenericBasicResponse<AdmiModeloElemento> guardarModeloElemento(@RequestBody AdmiModeloElemento request) throws Exception {
 		log.info("Petición recibida: guardarModeloElemento");
-		GenericBasicResponse<AdmiModeloElemento> response = new GenericBasicResponse<AdmiModeloElemento>();
+		GenericBasicResponse<AdmiModeloElemento> response = new GenericBasicResponse<>();
 		response.setData(modeloElementoService.guardarModeloElemento(request));
 		return response;
 	}
@@ -58,12 +58,12 @@ public class ModeloElementoController {
 	 * @since 02/03/2020
 	 * 
 	 * @return {@linkplain GenericListResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@GetMapping("listaModeloElemento")
 	public GenericListResponse<AdmiModeloElemento> listaModeloElemento() throws Exception {
 		log.info("Petición recibida: listaModeloElemento");
-		GenericListResponse<AdmiModeloElemento> response = new GenericListResponse<AdmiModeloElemento>();
+		GenericListResponse<AdmiModeloElemento> response = new GenericListResponse<>();
 		response.setData(modeloElementoService.listaModeloElemento());
 		return response;
 	}
@@ -77,12 +77,12 @@ public class ModeloElementoController {
 	 * 
 	 * @param request {@linkplain AdmiModeloElemento}
 	 * @return {@linkplain GenericListResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaModeloElementoPor", consumes = "application/json")
 	public GenericListResponse<AdmiModeloElemento> listaModeloElementoPor(@RequestBody AdmiModeloElemento request) throws Exception {
 		log.info("Petición recibida: listaModeloElementoPor");
-		GenericListResponse<AdmiModeloElemento> response = new GenericListResponse<AdmiModeloElemento>();
+		GenericListResponse<AdmiModeloElemento> response = new GenericListResponse<>();
 		response.setData(modeloElementoService.listaModeloElementoPor(request));
 		return response;
 	}
@@ -96,13 +96,13 @@ public class ModeloElementoController {
 	 * 
 	 * @param request {@linkplain PageDTO}
 	 * @return {@linkplain GenericBasicResponse}
-	 * @throws Exception
+	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "paginaListaModeloElementoPor", consumes = "application/json")
 	public GenericBasicResponse<Page<AdmiModeloElemento>> paginaListaModeloElementoPor(@RequestBody PageDTO<AdmiModeloElemento> request)
 			throws Exception {
 		log.info("Petición recibida: paginaListaModeloElementoPor");
-		GenericBasicResponse<Page<AdmiModeloElemento>> response = new GenericBasicResponse<Page<AdmiModeloElemento>>();
+		GenericBasicResponse<Page<AdmiModeloElemento>> response = new GenericBasicResponse<>();
 		response.setData(modeloElementoService.paginaListaModeloElementoPor(request));
 		return response;
 	}

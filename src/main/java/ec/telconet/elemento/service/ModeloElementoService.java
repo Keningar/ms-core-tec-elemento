@@ -33,7 +33,7 @@ public class ModeloElementoService {
 	 * 
 	 * @param request AdmiModeloElemento
 	 * @return AdmiModeloElemento
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(rollbackFor = { Exception.class, GenericException.class }, value = "telconetTransactionManager")
 	public AdmiModeloElemento guardarModeloElemento(AdmiModeloElemento request) throws Exception {
@@ -48,7 +48,7 @@ public class ModeloElementoService {
 	 * @since 02/03/2020
 	 * 
 	 * @return List<AdmiModeloElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<AdmiModeloElemento> listaModeloElemento() throws Exception {
@@ -64,7 +64,7 @@ public class ModeloElementoService {
 	 * 
 	 * @param request AdmiModeloElemento
 	 * @return List<AdmiModeloElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public List<AdmiModeloElemento> listaModeloElementoPor(AdmiModeloElemento request) throws Exception {
@@ -80,7 +80,7 @@ public class ModeloElementoService {
 	 * 
 	 * @param request PageDTO<AdmiModeloElemento>
 	 * @return Page<AdmiModeloElemento>
-	 * @throws Exception
+	 * @throws Exception Exception
 	 */
 	@Transactional(readOnly = true)
 	public Page<AdmiModeloElemento> paginaListaModeloElementoPor(PageDTO<AdmiModeloElemento> request) throws Exception {
