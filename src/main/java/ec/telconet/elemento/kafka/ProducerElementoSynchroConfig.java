@@ -20,6 +20,8 @@ import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 import ec.telconet.microservicio.core.tecnico.kafka.cons.CoreTecnicoConstants;
 import ec.telconet.microservicio.dependencia.util.kafka.KafkaRequest;
 import ec.telconet.microservicio.dependencia.util.kafka.KafkaResponse;
+import io.opentracing.contrib.kafka.TracingConsumerInterceptor;
+
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 /**
@@ -57,6 +59,7 @@ public class ProducerElementoSynchroConfig {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, CoreTecnicoConstants.GROUP_ELEMENTO.concat(uuidGrupoKafka));
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+        props.put(ConsumerConfig.INTERCEPTOR_CLASSES_CONFIG, TracingConsumerInterceptor.class.getName());
         props.put("key.serializer", "ec.telconet.microservicio.dependencia.util.kafka.utils.KafkaResponseSerializer");
         props.put("value.serializer", "ec.telconet.microservicio.dependencia.util.kafka.utils.KafkaResponseSerializer");
         props.put("key.deserializer", "ec.telconet.microservicio.dependencia.util.kafka.utils.KafkaResponseDeserializer");
