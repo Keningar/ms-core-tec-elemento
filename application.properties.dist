@@ -20,5 +20,7 @@ spring.datasource.hikari.max-lifetime=600000
 logging.config: classpath:log4j2.xml
 
 
-jaeger.tracer.host=172.24.15.91
+jaeger.tracer.host=
 jaeger.tracer.port=6831
+jaeger.tracer.logspan=false
+jaeger.tracer.nametracer=ms-core-elemento
