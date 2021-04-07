@@ -40,6 +40,9 @@ public class ProducerElementoSynchroConfig {
     @Value("${kafka.request-reply.timeout-ms:300s}")
     private String replyTimeout;
 
+    @Value(value = "${kafka.request.max.byte:15728640}")
+    private Integer maxByteRequestKafka;
+
     private final String uuidGrupoKafka = UUID.randomUUID().toString();
 
     @Bean
@@ -49,7 +52,7 @@ public class ProducerElementoSynchroConfig {
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         configProps.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
-        configProps.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, 5048576);
+        configProps.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, maxByteRequestKafka);
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
@@ -59,6 +62,7 @@ public class ProducerElementoSynchroConfig {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, CoreTecnicoConstants.GROUP_ELEMENTO.concat(uuidGrupoKafka));
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+        props.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, maxByteRequestKafka);
         props.put(ConsumerConfig.INTERCEPTOR_CLASSES_CONFIG, TracingConsumerInterceptor.class.getName());
         props.put("key.serializer", "ec.telconet.microservicio.dependencia.util.kafka.utils.KafkaResponseSerializer");
         props.put("value.serializer", "ec.telconet.microservicio.dependencia.util.kafka.utils.KafkaResponseSerializer");

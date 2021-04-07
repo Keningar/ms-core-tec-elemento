@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>ec.telconet.microservicios.dependencias</groupId>
 			<artifactId>ms-core</artifactId>
-			<version>dev-jdvinueza-1</version>
+			<version>dev-mpluas-bug-2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>ec.telconet.microservicios.dependencias</groupId>
 			<artifactId>ms-core-tecnico</artifactId>
-			<version>dev-eespinoza-2</version>
+			<version>dev-mpluas-bug-2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
