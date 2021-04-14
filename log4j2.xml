@@ -14,8 +14,8 @@
 
 		<!-- Rolling File Appender -->
 		<RollingFile name="FileAppender"
-			fileName="/var/log/api-elemento/Elemento.log"
-			filePattern="/var/log/api-elemento/Elemento-%d{yyyy-MM}-%i.log">
+			fileName="../logs/ms-core-tec-elemento.log"
+			filePattern="../logs/ms-core-tec-elemento-%d{yyyy-MM}-%i.log">
 
 			<PatternLayout>
 				<Pattern>${LOG_PATTERN}</Pattern>
