@@ -3,6 +3,7 @@ package ec.telconet.elemento.kafka;
 import java.util.Collections;
 import java.util.UUID;
 
+import ec.telconet.microservicio.dependencia.util.kafka.KafkaProperties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +92,29 @@ public class ElementoConsumer {
 	
 	@Autowired
 	TransaccionesService transaccionesService;
-	
+
+	@Autowired
+	KafkaProperties kafkaProperties;
+
+	@Autowired
+	public ElementoConsumer(KafkaProperties kafkaProperties) {
+		String kafkaTopicSync = CoreTecnicoConstants.TOPIC_ELEMENTO_SYNC;
+		if (kafkaProperties.getTopicSyncSufijo() != null) {
+			kafkaTopicSync = kafkaTopicSync.concat(kafkaProperties.getTopicSyncSufijo());
+		}
+		kafkaProperties.setTopicSyncSufijo(kafkaTopicSync);
+		log.info("Topic kafka sync configurado: " + kafkaTopicSync);
+
+		String kafkaTopicAsyn = CoreTecnicoConstants.TOPIC_ELEMENTO_ASYN;
+		if (kafkaProperties.getTopicAsynSufijo() != null) {
+			kafkaTopicAsyn = kafkaTopicAsyn.concat(kafkaProperties.getTopicAsynSufijo());
+		}
+		kafkaProperties.setTopicAsynSufijo(kafkaTopicAsyn);
+		log.info("Topic kafka asyn configurado: " + kafkaTopicAsyn);
+
+		this.kafkaProperties = kafkaProperties;
+	}
+
 	/**
 	 * Listener asincrónico kafka
 	 * 
@@ -101,8 +124,8 @@ public class ElementoConsumer {
 	 * 
 	 * @param kafkaRequest Request Kafka
      */
-	@KafkaListener(topics = CoreTecnicoConstants.TOPIC_ELEMENTO_ASYN, groupId = CoreTecnicoConstants.GROUP_ELEMENTO, containerFactory = "kafkaListenerContainerFactory")
-	public void elementoAsynchrotListener(KafkaRequest<?> kafkaRequest) {
+	@KafkaListener(topics = "#{kafkaProperties.getTopicAsynSufijo()}", groupId = CoreTecnicoConstants.GROUP_ELEMENTO, containerFactory = "kafkaListenerContainerFactory")
+	public void elementoAsynchroListener(KafkaRequest<?> kafkaRequest) {
 		String idTransKafka = UUID.randomUUID().toString();
 		log.info("Petición kafka asincrónico recibida: " + kafkaRequest.getOp() + ", Transacción: " + idTransKafka);
 		// EJECUCIONES ASINCRONICAS
@@ -120,7 +143,7 @@ public class ElementoConsumer {
 	 * @return KafkaResponse
      */
 	@SuppressWarnings("unchecked")
-	@KafkaListener(topics = CoreTecnicoConstants.TOPIC_ELEMENTO_SYNC, groupId = CoreTecnicoConstants.GROUP_ELEMENTO, containerFactory = "requestReplyListenerContainerFactory")
+	@KafkaListener(topics = "#{kafkaProperties.getTopicSyncSufijo()}", groupId = CoreTecnicoConstants.GROUP_ELEMENTO, containerFactory = "requestReplyListenerContainerFactory")
 	@SendTo()
 	public <T> KafkaResponse<T> elementoSynchroListener(KafkaRequest<?> kafkaRequest, Acknowledgment commitKafka) {
 		String idTransKafka = UUID.randomUUID().toString();
