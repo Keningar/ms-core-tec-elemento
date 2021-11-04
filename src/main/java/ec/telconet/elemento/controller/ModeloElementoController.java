@@ -1,5 +1,6 @@
 package ec.telconet.elemento.controller;
 
+import ec.telconet.microservicio.dependencia.util.general.Formato;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import ec.telconet.microservicio.dependencia.util.dto.PageDTO;
 import ec.telconet.microservicio.dependencia.util.response.GenericBasicResponse;
 import ec.telconet.microservicio.dependencia.util.response.GenericListResponse;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.entity.AdmiModeloElemento;
+
+import java.util.Arrays;
 
 /**
  * Clase utilizada para publicar microservicios técnicos con información referente al modelo de los elementos
@@ -35,7 +38,6 @@ public class ModeloElementoController {
 	 * Método que guarda un modelo de elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain AdmiModeloElemento}
@@ -43,10 +45,10 @@ public class ModeloElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "guardarModeloElemento", consumes = "application/json")
-	public GenericBasicResponse<AdmiModeloElemento> guardarModeloElemento(@RequestBody AdmiModeloElemento request) throws Exception {
+	public GenericBasicResponse<Object> guardarModeloElemento(@RequestBody Object request) throws Exception {
 		log.info("Petición recibida: guardarModeloElemento");
-		GenericBasicResponse<AdmiModeloElemento> response = new GenericBasicResponse<>();
-		response.setData(modeloElementoService.guardarModeloElemento(request));
+		GenericBasicResponse<Object> response = new GenericBasicResponse<>();
+		response.setData(modeloElementoService.guardarModeloElemento(Formato.mapearObjDeserializado(request, AdmiModeloElemento.class)));
 		return response;
 	}
 	
@@ -54,17 +56,16 @@ public class ModeloElementoController {
 	 * Método que retorna la lista de modelos de elementos
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @return {@linkplain GenericListResponse}
 	 * @throws Exception Excepcion
 	 */
 	@GetMapping("listaModeloElemento")
-	public GenericListResponse<AdmiModeloElemento> listaModeloElemento() throws Exception {
+	public GenericListResponse<Object> listaModeloElemento() throws Exception {
 		log.info("Petición recibida: listaModeloElemento");
-		GenericListResponse<AdmiModeloElemento> response = new GenericListResponse<>();
-		response.setData(modeloElementoService.listaModeloElemento());
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(modeloElementoService.listaModeloElemento().toArray()));
 		return response;
 	}
 	
@@ -72,7 +73,6 @@ public class ModeloElementoController {
 	 * Método que retorna la lista de modelos de elementos con filtros
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain AdmiModeloElemento}
@@ -80,10 +80,10 @@ public class ModeloElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaModeloElementoPor", consumes = "application/json")
-	public GenericListResponse<AdmiModeloElemento> listaModeloElementoPor(@RequestBody AdmiModeloElemento request) throws Exception {
+	public GenericListResponse<Object> listaModeloElementoPor(@RequestBody Object request) throws Exception {
 		log.info("Petición recibida: listaModeloElementoPor");
-		GenericListResponse<AdmiModeloElemento> response = new GenericListResponse<>();
-		response.setData(modeloElementoService.listaModeloElementoPor(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(modeloElementoService.listaModeloElementoPor(Formato.mapearObjDeserializado(request, AdmiModeloElemento.class)).toArray()));
 		return response;
 	}
 	
@@ -91,7 +91,6 @@ public class ModeloElementoController {
 	 * Método que retorna la paginación de una lista de modelos de elementos con filtros
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain PageDTO}
@@ -99,11 +98,11 @@ public class ModeloElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "paginaListaModeloElementoPor", consumes = "application/json")
-	public GenericBasicResponse<Page<AdmiModeloElemento>> paginaListaModeloElementoPor(@RequestBody PageDTO<AdmiModeloElemento> request)
+	public GenericBasicResponse<Page<AdmiModeloElemento>> paginaListaModeloElementoPor(@RequestBody Object request)
 			throws Exception {
 		log.info("Petición recibida: paginaListaModeloElementoPor");
 		GenericBasicResponse<Page<AdmiModeloElemento>> response = new GenericBasicResponse<>();
-		response.setData(modeloElementoService.paginaListaModeloElementoPor(request));
+		response.setData(modeloElementoService.paginaListaModeloElementoPor(Formato.mapearPageObjDeserializado(request, AdmiModeloElemento.class)));
 		return response;
 	}
 }

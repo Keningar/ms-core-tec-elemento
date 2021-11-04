@@ -36,7 +36,6 @@ public class ConsultasController {
 	 * Método que retorna los datos de un vehículo
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 05/05/2020
 	 * 
 	 * @param request {@linkplain DatosVehiculoReqDTO}
@@ -56,7 +55,6 @@ public class ConsultasController {
 	 * Método que retorna los elementos de un grupo de monitorización
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 23/06/2020
 	 * 
 	 * @param request {@linkplain ElementoPorGrupoReqDTO}

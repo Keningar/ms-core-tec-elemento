@@ -1,5 +1,6 @@
 package ec.telconet.elemento.controller;
 
+import ec.telconet.microservicio.dependencia.util.general.Formato;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import ec.telconet.microservicio.dependencia.util.response.GenericListResponse;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.HistorialElementoPorFechaReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.HistorialElementoReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.entity.InfoHistorialElemento;
+
+import java.util.Arrays;
 
 /**
  * Clase utilizada para publicar microservicios técnicos con información referente al historial de los elementos
@@ -34,7 +37,6 @@ public class HistorialElementoController {
 	 * Método que guarda un historial de elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain InfoHistorialElemento}
@@ -42,10 +44,10 @@ public class HistorialElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "guardarHistorialElemento", consumes = "application/json")
-	public GenericBasicResponse<InfoHistorialElemento> guardarHistorialElemento(@RequestBody InfoHistorialElemento request) throws Exception {
+	public GenericBasicResponse<Object> guardarHistorialElemento(@RequestBody Object request) throws Exception {
 		log.info("Petición recibida: guardarHistorialElemento");
-		GenericBasicResponse<InfoHistorialElemento> response = new GenericBasicResponse<>();
-		response.setData(historialElementoService.guardarHistorialElemento(request));
+		GenericBasicResponse<Object> response = new GenericBasicResponse<>();
+		response.setData(historialElementoService.guardarHistorialElemento(Formato.mapearObjDeserializado(request, InfoHistorialElemento.class)));
 		return response;
 	}
 	
@@ -53,7 +55,6 @@ public class HistorialElementoController {
 	 * Método que retorna la lista de historial de un elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain HistorialElementoReqDTO}
@@ -61,11 +62,11 @@ public class HistorialElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaHistorialElementoPorElemento", consumes = "application/json")
-	public GenericListResponse<InfoHistorialElemento> listaHistorialElementoPorElemento(@RequestBody HistorialElementoReqDTO request)
+	public GenericListResponse<Object> listaHistorialElementoPorElemento(@RequestBody HistorialElementoReqDTO request)
 			throws Exception {
 		log.info("Petición recibida: listaHistorialElementoPorElemento");
-		GenericListResponse<InfoHistorialElemento> response = new GenericListResponse<>();
-		response.setData(historialElementoService.listaHistorialElementoPorElemento(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(historialElementoService.listaHistorialElementoPorElemento(request).toArray()));
 		return response;
 	}
 	
@@ -73,7 +74,6 @@ public class HistorialElementoController {
 	 * Método que retorna la lista de historial de un elemento con un rango de fecha
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain HistorialElementoPorFechaReqDTO}
@@ -81,11 +81,11 @@ public class HistorialElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaHistorialElementoPorFecha", consumes = "application/json")
-	public GenericListResponse<InfoHistorialElemento> listaHistorialElementoPorFecha(@RequestBody HistorialElementoPorFechaReqDTO request)
+	public GenericListResponse<Object> listaHistorialElementoPorFecha(@RequestBody HistorialElementoPorFechaReqDTO request)
 			throws Exception {
 		log.info("Petición recibida: listaHistorialElementoPorFecha");
-		GenericListResponse<InfoHistorialElemento> response = new GenericListResponse<>();
-		response.setData(historialElementoService.listaHistorialElementoPorFecha(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(historialElementoService.listaHistorialElementoPorFecha(request).toArray()));
 		return response;
 	}
 }

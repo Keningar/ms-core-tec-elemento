@@ -77,7 +77,7 @@ public class ElementoApplication {
      */
     @Bean
     public ServletRegistrationBean<DispatcherServlet> dispatcherRegistration(DispatcherServlet dispatcherServlet) {
-        ServletRegistrationBean<DispatcherServlet> bean = new ServletRegistrationBean<DispatcherServlet>(dispatcherServlet, "/" + pathWebService + "/*");
+        ServletRegistrationBean<DispatcherServlet> bean = new ServletRegistrationBean<>(dispatcherServlet, "/" + pathWebService + "/*");
         bean.setAsyncSupported(true);
         bean.setName(pathWebService);
         bean.setLoadOnStartup(1);

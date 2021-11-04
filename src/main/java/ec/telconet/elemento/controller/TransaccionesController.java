@@ -31,7 +31,6 @@ public class TransaccionesController {
 	 * Método que asigna una ubicación a un elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 04/08/2020
 	 * 
 	 * @param request {@linkplain UbicacionElementoReqDTO}
@@ -50,7 +49,6 @@ public class TransaccionesController {
 	 * Método que modifica una ubicación a un elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 04/08/2020
 	 * 
 	 * @param request {@linkplain UbicacionElementoReqDTO}

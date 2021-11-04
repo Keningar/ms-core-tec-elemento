@@ -1,5 +1,6 @@
 package ec.telconet.elemento.controller;
 
+import ec.telconet.microservicio.dependencia.util.general.Formato;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import ec.telconet.microservicio.dependencia.util.response.GenericBasicResponse;
 import ec.telconet.microservicio.dependencia.util.response.GenericListResponse;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.DetalleElementoReqDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.entity.InfoDetalleElemento;
+
+import java.util.Arrays;
 
 /**
  * Clase utilizada para publicar microservicios técnicos con información referente al detalle de los elementos
@@ -36,7 +39,6 @@ public class DetalleElementoController {
 	 * Método que guarda un detalle del elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain InfoDetalleElemento}
@@ -44,10 +46,10 @@ public class DetalleElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "guardarDetalleElemento", consumes = "application/json")
-	public GenericBasicResponse<InfoDetalleElemento> guardarDetalleElemento(@RequestBody InfoDetalleElemento request) throws Exception {
+	public GenericBasicResponse<Object> guardarDetalleElemento(@RequestBody Object request) throws Exception {
 		log.info("Petición recibida: guardarDetalleElemento");
-		GenericBasicResponse<InfoDetalleElemento> response = new GenericBasicResponse<>();
-		response.setData(detalleElementoService.guardarDetalleElemento(request));
+		GenericBasicResponse<Object> response = new GenericBasicResponse<>();
+		response.setData(detalleElementoService.guardarDetalleElemento(Formato.mapearObjDeserializado(request, InfoDetalleElemento.class)));
 		return response;
 	}
 	
@@ -55,7 +57,6 @@ public class DetalleElementoController {
 	 * Método que actualiza un detalle del elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain InfoDetalleElemento}
@@ -63,10 +64,10 @@ public class DetalleElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "actualizarDetalleElemento", consumes = "application/json")
-	public GenericBasicResponse<InfoDetalleElemento> actualizarDetalleElemento(@RequestBody InfoDetalleElemento request) throws Exception {
+	public GenericBasicResponse<Object> actualizarDetalleElemento(@RequestBody Object request) throws Exception {
 		log.info("Petición recibida: actualizarDetalleElemento");
-		GenericBasicResponse<InfoDetalleElemento> response = new GenericBasicResponse<>();
-		response.setData(detalleElementoService.actualizarDetalleElemento(request));
+		GenericBasicResponse<Object> response = new GenericBasicResponse<>();
+		response.setData(detalleElementoService.actualizarDetalleElemento(Formato.mapearObjDeserializado(request, InfoDetalleElemento.class)));
 		return response;
 	}
 	
@@ -74,7 +75,6 @@ public class DetalleElementoController {
 	 * Método que elimina un detalle del elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain InfoDetalleElemento}
@@ -82,10 +82,10 @@ public class DetalleElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "eliminarDetalleElemento", consumes = "application/json")
-	public GenericBasicResponse<Boolean> eliminarDetalleElemento(@RequestBody InfoDetalleElemento request) throws Exception {
+	public GenericBasicResponse<Boolean> eliminarDetalleElemento(@RequestBody Object request) throws Exception {
 		log.info("Petición recibida: eliminarDetalleElemento");
 		GenericBasicResponse<Boolean> response = new GenericBasicResponse<>();
-		response.setData(detalleElementoService.eliminarDetalleElemento(request));
+		response.setData(detalleElementoService.eliminarDetalleElemento(Formato.mapearObjDeserializado(request, InfoDetalleElemento.class)));
 		return response;
 	}
 	
@@ -93,17 +93,16 @@ public class DetalleElementoController {
 	 * Método que retorna la lista de detalle del elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @return {@linkplain GenericListResponse}
 	 * @throws Exception Excepcion
 	 */
 	@GetMapping("listaDetalleElemento")
-	public GenericListResponse<InfoDetalleElemento> listaDetalleElemento() throws Exception {
+	public GenericListResponse<Object> listaDetalleElemento() throws Exception {
 		log.info("Petición recibida: listaDetalleElemento");
-		GenericListResponse<InfoDetalleElemento> response = new GenericListResponse<>();
-		response.setData(detalleElementoService.listaDetalleElemento());
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(detalleElementoService.listaDetalleElemento().toArray()));
 		return response;
 	}
 	
@@ -111,7 +110,6 @@ public class DetalleElementoController {
 	 * Método que retorna la lista de detalle del elemento con filtros
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain InfoDetalleElemento}
@@ -119,10 +117,10 @@ public class DetalleElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaDetalleElementoPor", consumes = "application/json")
-	public GenericListResponse<InfoDetalleElemento> listaDetalleElementoPor(@RequestBody InfoDetalleElemento request) throws Exception {
+	public GenericListResponse<Object> listaDetalleElementoPor(@RequestBody Object request) throws Exception {
 		log.info("Petición recibida: listaDetalleElementoPor");
-		GenericListResponse<InfoDetalleElemento> response = new GenericListResponse<>();
-		response.setData(detalleElementoService.listaDetalleElementoPor(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(detalleElementoService.listaDetalleElementoPor(Formato.mapearObjDeserializado(request, InfoDetalleElemento.class)).toArray()));
 		return response;
 	}
 	
@@ -130,7 +128,6 @@ public class DetalleElementoController {
 	 * Método que retorna la paginación de una lista de detalle del elemento con filtros
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain PageDTO}
@@ -138,11 +135,11 @@ public class DetalleElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "paginaListaDetalleElementoPor", consumes = "application/json")
-	public GenericBasicResponse<Page<InfoDetalleElemento>> paginaListaDetalleElementoPor(@RequestBody PageDTO<InfoDetalleElemento> request)
+	public GenericBasicResponse<Page<InfoDetalleElemento>> paginaListaDetalleElementoPor(@RequestBody Object request)
 			throws Exception {
 		log.info("Petición recibida: paginaListaDetalleElementoPor");
 		GenericBasicResponse<Page<InfoDetalleElemento>> response = new GenericBasicResponse<>();
-		response.setData(detalleElementoService.paginaListaDetalleElementoPor(request));
+		response.setData(detalleElementoService.paginaListaDetalleElementoPor(Formato.mapearPageObjDeserializado(request, InfoDetalleElemento.class)));
 		return response;
 	}
 	
@@ -150,7 +147,6 @@ public class DetalleElementoController {
 	 * Método que retorna la lista de detalles de un elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain DetalleElementoReqDTO}
@@ -158,10 +154,10 @@ public class DetalleElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaDetalleElementoPorElemento", consumes = "application/json")
-	public GenericListResponse<InfoDetalleElemento> listaDetalleElementoPorElemento(@RequestBody DetalleElementoReqDTO request) throws Exception {
+	public GenericListResponse<Object> listaDetalleElementoPorElemento(@RequestBody DetalleElementoReqDTO request) throws Exception {
 		log.info("Petición recibida: listaDetalleElementoPorElemento");
-		GenericListResponse<InfoDetalleElemento> response = new GenericListResponse<>();
-		response.setData(detalleElementoService.listaDetalleElementoPorElemento(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(detalleElementoService.listaDetalleElementoPorElemento(request).toArray()));
 		return response;
 	}
 }

@@ -16,16 +16,16 @@
     <description>MS Elementos</description>
 
     <properties>
-        <version>1.1.1-RELEASE</version>
-        <version.ms-core>1.1.3-RELEASE</version.ms-core>
+        <version>1.1.2-RELEASE</version>
+        <version.ms-core>1.1.5-RELEASE</version.ms-core>
         <version.db-config>1.0.0-RELEASE</version.db-config>
         <version.ms-core-general>1.0.6-RELEASE</version.ms-core-general>
-        <version.db-repositorio-infraestructura>1.0.6-RELEASE</version.db-repositorio-infraestructura>
-        <version.ms-core-tecnico>1.0.8-RELEASE</version.ms-core-tecnico>
+        <version.db-repositorio-infraestructura>1.0.7-RELEASE</version.db-repositorio-infraestructura>
+        <version.ms-core-tecnico>1.0.9-RELEASE</version.ms-core-tecnico>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8
-        </project.reporting.outputEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <log4j2.version>2.17.0</log4j2.version>
     </properties>
 
     <dependencies>
@@ -56,7 +56,7 @@
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
-            <version>3.3.6</version>
+            <version>3.4.4</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
@@ -95,6 +95,10 @@
             <version>${version.db-config}</version>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
+        <dependency>
             <groupId>ec.telconet.microservicios.dependencias</groupId>
             <artifactId>ms-core-general</artifactId>
             <version>${version.ms-core-general}</version>
@@ -105,18 +109,19 @@
             <version>${version.ms-core-tecnico}</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-yaml</artifactId>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
+            <version>3.0.0</version>
         </dependency>
     </dependencies>
 

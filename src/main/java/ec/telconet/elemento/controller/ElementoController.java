@@ -1,5 +1,6 @@
 package ec.telconet.elemento.controller;
 
+import ec.telconet.microservicio.dependencia.util.general.Formato;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
+import java.util.Arrays;
+
 /**
  * Clase utilizada para publicar microservicios técnicos con información referente a los elementos
  * 
@@ -45,7 +48,6 @@ public class ElementoController {
 	 * Método que guarda un elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain InfoElemento}
@@ -53,10 +55,10 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "guardarElemento", consumes = "application/json")
-	public GenericBasicResponse<InfoElemento> guardarElemento(@RequestBody InfoElemento request) throws Exception {
+	public GenericBasicResponse<Object> guardarElemento(@RequestBody Object request) throws Exception {
 		log.info("Petición recibida: guardarElemento");
-		GenericBasicResponse<InfoElemento> response = new GenericBasicResponse<>();
-		response.setData(elementoService.guardarElemento(request));
+		GenericBasicResponse<Object> response = new GenericBasicResponse<>();
+		response.setData(elementoService.guardarElemento(Formato.mapearObjDeserializado(request, InfoElemento.class)));
 		return response;
 	}
 	
@@ -64,7 +66,6 @@ public class ElementoController {
 	 * Método que actualiza un elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain InfoElemento}
@@ -72,10 +73,10 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "actualizarElemento", consumes = "application/json")
-	public GenericBasicResponse<InfoElemento> actualizarElemento(@RequestBody InfoElemento request) throws Exception {
+	public GenericBasicResponse<Object> actualizarElemento(@RequestBody Object request) throws Exception {
 		log.info("Petición recibida: actualizarElemento");
-		GenericBasicResponse<InfoElemento> response = new GenericBasicResponse<>();
-		response.setData(elementoService.actualizarElemento(request));
+		GenericBasicResponse<Object> response = new GenericBasicResponse<>();
+		response.setData(elementoService.actualizarElemento(Formato.mapearObjDeserializado(request, InfoElemento.class)));
 		return response;
 	}
 	
@@ -83,7 +84,6 @@ public class ElementoController {
 	 * Método que elimina un elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain InfoElemento}
@@ -91,10 +91,10 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "eliminarElemento", consumes = "application/json")
-	public GenericBasicResponse<Boolean> eliminarElemento(@RequestBody InfoElemento request) throws Exception {
+	public GenericBasicResponse<Boolean> eliminarElemento(@RequestBody Object request) throws Exception {
 		log.info("Petición recibida: eliminarElemento");
 		GenericBasicResponse<Boolean> response = new GenericBasicResponse<>();
-		response.setData(elementoService.eliminarElemento(request));
+		response.setData(elementoService.eliminarElemento(Formato.mapearObjDeserializado(request, InfoElemento.class)));
 		return response;
 	}
 	
@@ -102,17 +102,16 @@ public class ElementoController {
 	 * Método que retorna la lista de elementos
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @return {@linkplain GenericListResponse}
 	 * @throws Exception Excepcion
 	 */
 	@GetMapping("listaElemento")
-	public GenericListResponse<InfoElemento> listaElemento() throws Exception {
+	public GenericListResponse<Object> listaElemento() throws Exception {
 		log.info("Petición recibida: listaElemento");
-		GenericListResponse<InfoElemento> response = new GenericListResponse<>();
-		response.setData(elementoService.listaElemento());
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(elementoService.listaElemento().toArray()));
 		return response;
 	}
 	
@@ -120,7 +119,6 @@ public class ElementoController {
 	 * Método que retorna la lista de elementos con filtros
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain InfoElemento}
@@ -128,10 +126,10 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaElementoPor", consumes = "application/json")
-	public GenericListResponse<InfoElemento> listaElementoPor(@RequestBody InfoElemento request) throws Exception {
+	public GenericListResponse<Object> listaElementoPor(@RequestBody Object request) throws Exception {
 		log.info("Petición recibida: listaElementoPor");
-		GenericListResponse<InfoElemento> response = new GenericListResponse<>();
-		response.setData(elementoService.listaElementoPor(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(elementoService.listaElementoPor(Formato.mapearObjDeserializado(request, InfoElemento.class)).toArray()));
 		return response;
 	}
 	
@@ -139,7 +137,6 @@ public class ElementoController {
 	 * Método que retorna la paginación de una lista de elementos con filtros
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain PageDTO}
@@ -147,10 +144,10 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "paginaListaElementoPor", consumes = "application/json")
-	public GenericBasicResponse<Page<InfoElemento>> paginaListaElementoPor(@RequestBody PageDTO<InfoElemento> request) throws Exception {
+	public GenericBasicResponse<Page<InfoElemento>> paginaListaElementoPor(@RequestBody Object request) throws Exception {
 		log.info("Petición recibida: paginaListaElementoPor");
 		GenericBasicResponse<Page<InfoElemento>> response = new GenericBasicResponse<>();
-		response.setData(elementoService.paginaListaElementoPor(request));
+		response.setData(elementoService.paginaListaElementoPor(Formato.mapearPageObjDeserializado(request, InfoElemento.class)));
 		return response;
 	}
 	
@@ -158,7 +155,6 @@ public class ElementoController {
 	 * Método que retorna la lista de elementos de un tipo de elemento
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain ElementoPorTipoReqDTO}
@@ -166,10 +162,10 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaElementoPorTipo", consumes = "application/json")
-	public GenericListResponse<InfoElemento> listaElementoPorTipo(@RequestBody ElementoPorTipoReqDTO request) throws Exception {
+	public GenericListResponse<Object> listaElementoPorTipo(@RequestBody ElementoPorTipoReqDTO request) throws Exception {
 		log.info("Petición recibida: listaElementoPorTipo");
-		GenericListResponse<InfoElemento> response = new GenericListResponse<>();
-		response.setData(elementoService.listaElementoPorTipo(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(elementoService.listaElementoPorTipo(request).toArray()));
 		return response;
 	}
 	
@@ -177,7 +173,6 @@ public class ElementoController {
 	 * Método que retorna la lista de elementos que tiene como característica ES_MONITORIZADO
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain ElementoPorMonitorizadoReqDTO}
@@ -185,10 +180,10 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaElementoPorEsMonitorizado", consumes = "application/json")
-	public GenericListResponse<InfoElemento> listaElementoPorEsMonitorizado(@RequestBody ElementoPorMonitorizadoReqDTO request) throws Exception {
+	public GenericListResponse<Object> listaElementoPorEsMonitorizado(@RequestBody ElementoPorMonitorizadoReqDTO request) throws Exception {
 		log.info("Petición recibida: listaElementoPorEsMonitorizado");
-		GenericListResponse<InfoElemento> response = new GenericListResponse<>();
-		response.setData(elementoService.listaElementoPorEsMonitorizado(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(elementoService.listaElementoPorEsMonitorizado(request).toArray()));
 		return response;
 	}
 	
@@ -196,7 +191,6 @@ public class ElementoController {
 	 * Método que retorna la lista de elementos por region y params
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain ElementoPorRegionParamsReqDTO}
@@ -204,10 +198,10 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaElementoPorRegionParams", consumes = "application/json")
-	public GenericListResponse<InfoElemento> listaElementoPorRegionParams(@RequestBody ElementoPorRegionParamsReqDTO request) throws Exception {
+	public GenericListResponse<Object> listaElementoPorRegionParams(@RequestBody ElementoPorRegionParamsReqDTO request) throws Exception {
 		log.info("Petición recibida: listaElementoPorRegionParams");
-		GenericListResponse<InfoElemento> response = new GenericListResponse<>();
-		response.setData(elementoService.listaElementoPorRegionParams(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(elementoService.listaElementoPorRegionParams(request).toArray()));
 		return response;
 	}
 	
@@ -215,7 +209,6 @@ public class ElementoController {
 	 * Método que retorna la lista de elementos por provincia y params
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain ElementoPorProvinciaParamsReqDTO}
@@ -223,10 +216,10 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaElementoPorProvinciaParams", consumes = "application/json")
-	public GenericListResponse<InfoElemento> listaElementoPorProvinciaParams(@RequestBody ElementoPorProvinciaParamsReqDTO request) throws Exception {
+	public GenericListResponse<Object> listaElementoPorProvinciaParams(@RequestBody ElementoPorProvinciaParamsReqDTO request) throws Exception {
 		log.info("Petición recibida: listaElementoPorProvinciaParams");
-		GenericListResponse<InfoElemento> response = new GenericListResponse<>();
-		response.setData(elementoService.listaElementoPorProvinciaParams(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(elementoService.listaElementoPorProvinciaParams(request).toArray()));
 		return response;
 	}
 	
@@ -234,7 +227,6 @@ public class ElementoController {
 	 * Método que retorna la lista de elementos por parroquia y params
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain ElementoPorParroquiaParamsReqDTO}
@@ -242,10 +234,10 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaElementoPorParroquiaParams", consumes = "application/json")
-	public GenericListResponse<InfoElemento> listaElementoPorParroquiaParams(@RequestBody ElementoPorParroquiaParamsReqDTO request) throws Exception {
+	public GenericListResponse<Object> listaElementoPorParroquiaParams(@RequestBody ElementoPorParroquiaParamsReqDTO request) throws Exception {
 		log.info("Petición recibida: listaElementoPorParroquiaParams");
-		GenericListResponse<InfoElemento> response = new GenericListResponse<>();
-		response.setData(elementoService.listaElementoPorParroquiaParams(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(elementoService.listaElementoPorParroquiaParams(request).toArray()));
 		return response;
 	}
 	
@@ -253,7 +245,6 @@ public class ElementoController {
 	 * Método que retorna la lista de elementos por canton y params
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain ElementoPorCantonParamsReqDTO}
@@ -261,10 +252,10 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaElementoPorCantonParams", consumes = "application/json")
-	public GenericListResponse<InfoElemento> listaElementoPorCantonParams(@RequestBody ElementoPorCantonParamsReqDTO request) throws Exception {
+	public GenericListResponse<Object> listaElementoPorCantonParams(@RequestBody ElementoPorCantonParamsReqDTO request) throws Exception {
 		log.info("Petición recibida: listaElementoPorCantonParams");
-		GenericListResponse<InfoElemento> response = new GenericListResponse<>();
-		response.setData(elementoService.listaElementoPorCantonParams(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(elementoService.listaElementoPorCantonParams(request).toArray()));
 		return response;
 	}
 	
@@ -272,7 +263,6 @@ public class ElementoController {
 	 * Método que retorna la lista de elementos por filial y params
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain ElementoPorFilialParamsReqDTO}
@@ -280,10 +270,10 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaElementoPorFilialParams", consumes = "application/json")
-	public GenericListResponse<InfoElemento> listaElementoPorFilialParams(@RequestBody ElementoPorFilialParamsReqDTO request) throws Exception {
+	public GenericListResponse<Object> listaElementoPorFilialParams(@RequestBody ElementoPorFilialParamsReqDTO request) throws Exception {
 		log.info("Petición recibida: listaElementoPorFilialParams");
-		GenericListResponse<InfoElemento> response = new GenericListResponse<>();
-		response.setData(elementoService.listaElementoPorFilialParams(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(elementoService.listaElementoPorFilialParams(request).toArray()));
 		return response;
 	}
 	
@@ -291,7 +281,6 @@ public class ElementoController {
 	 * Método que retorna la lista de elementos por departamento y params
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 02/03/2020
 	 * 
 	 * @param request {@linkplain ElementoPorDepartamentoParamsReqDTO}
@@ -299,11 +288,11 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaElementoPorDepartamentoParams", consumes = "application/json")
-	public GenericListResponse<InfoElemento> listaElementoPorDepartamentoParams(@RequestBody ElementoPorDepartamentoParamsReqDTO request)
+	public GenericListResponse<Object> listaElementoPorDepartamentoParams(@RequestBody ElementoPorDepartamentoParamsReqDTO request)
 			throws Exception {
 		log.info("Petición recibida: listaElementoPorDepartamentoParams");
-		GenericListResponse<InfoElemento> response = new GenericListResponse<>();
-		response.setData(elementoService.listaElementoPorDepartamentoParams(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(elementoService.listaElementoPorDepartamentoParams(request).toArray()));
 		return response;
 	}
 	
@@ -311,7 +300,6 @@ public class ElementoController {
 	 * Método que retorna la lista de elementos por cuadrilla y params
 	 * 
 	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
-	 * @version 1.0
 	 * @since 21/08/2020
 	 * 
 	 * @param request {@linkplain ElementoPorCuadrillaParamsReqDTO}
@@ -319,10 +307,10 @@ public class ElementoController {
 	 * @throws Exception Excepcion
 	 */
 	@PostMapping(path = "listaElementoPorCuadrillaParams", consumes = "application/json")
-	public GenericListResponse<InfoElemento> listaElementoPorCuadrillaParams(@RequestBody ElementoPorCuadrillaParamsReqDTO request) throws Exception {
+	public GenericListResponse<Object> listaElementoPorCuadrillaParams(@RequestBody ElementoPorCuadrillaParamsReqDTO request) throws Exception {
 		log.info("Petición recibida: listaElementoPorCuadrillaParams");
-		GenericListResponse<InfoElemento> response = new GenericListResponse<>();
-		response.setData(elementoService.listaElementoPorCuadrillaParams(request));
+		GenericListResponse<Object> response = new GenericListResponse<>();
+		response.setData(Arrays.asList(elementoService.listaElementoPorCuadrillaParams(request).toArray()));
 		return response;
 	}
 }
