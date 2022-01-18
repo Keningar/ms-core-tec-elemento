@@ -2,14 +2,11 @@ package ec.telconet.elemento.service;
 
 import java.util.List;
 
+import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.DatosVehiculoReqDTO;
-import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.DatosVehiculoResDTO;
-import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorGrupoReqDTO;
-import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorGrupoResDTO;
 import ec.telconet.microservicios.dependencias.esquema.infraestructura.service.InkgElementoConsultaService;
 
 /**
@@ -54,5 +51,20 @@ public class ConsultasService {
 	@Transactional(readOnly = true)
 	public List<ElementoPorGrupoResDTO> elementoPorGrupo(ElementoPorGrupoReqDTO request) throws Exception {
 		return inkgElementoConsultaService.elementoPorGrupo(request);
+	}
+
+	/**
+	 * Método que retorna los modelos de los elementos monitorizados
+	 *
+	 * @param request ElementoPorGrupoReqDTO
+	 *
+	 * @return List<ElementoPorGrupoResDTO>
+	 *
+	 * @throws Exception Exception
+	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
+	 * @since 23/06/2020
+	 */
+	public List<ModelosElemMonitorizadosResDTO> modelosElemMonitorizados(ModelosElemMonitorizadosReqDTO request) throws Exception {
+		return inkgElementoConsultaService.modelosElementoMonitorizado(request);
 	}
 }

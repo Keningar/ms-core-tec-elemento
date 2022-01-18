@@ -86,4 +86,20 @@ public class ModeloElementoService {
 	public Page<AdmiModeloElemento> paginaListaModeloElementoPor(PageDTO<AdmiModeloElemento> request) throws Exception {
 		return admiModeloElementoService.paginaListaPor(request);
 	}
+
+	/**
+	 * Método que actualiza un modelo de elemento
+	 *
+	 * @param request AdmiModeloElemento
+	 *
+	 * @return AdmiModeloElemento
+	 *
+	 * @throws Exception Exception
+	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
+	 * @since 02/03/2020
+	 */
+	@Transactional(rollbackFor = { Exception.class, GenericException.class }, value = "telconetTransactionManager")
+	public AdmiModeloElemento actualizarModeloElemento(AdmiModeloElemento request) throws Exception {
+		return admiModeloElementoService.actualizar(request);
+	}
 }

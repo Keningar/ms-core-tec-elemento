@@ -1,5 +1,6 @@
 package ec.telconet.elemento.controller;
 
+import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ec.telconet.elemento.service.ConsultasService;
 import ec.telconet.microservicio.dependencia.util.response.GenericListResponse;
-import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.DatosVehiculoReqDTO;
-import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.DatosVehiculoResDTO;
-import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorGrupoReqDTO;
-import ec.telconet.microservicios.dependencias.esquema.infraestructura.dto.ElementoPorGrupoResDTO;
 
 /**
  * Clase utilizada para publicar microservicios técnicos con información
@@ -67,6 +64,26 @@ public class ConsultasController {
 		log.info("Petición recibida: elementoPorGrupo");
 		GenericListResponse<ElementoPorGrupoResDTO> response = new GenericListResponse<>();
 		response.setData(consultasService.elementoPorGrupo(request));
+		return response;
+	}
+
+	/**
+	 * Método que retorna los modelos de los elementos monitorizados
+	 *
+	 * @param request {@linkplain ModelosElemMonitorizadosReqDTO}
+	 *
+	 * @return {@linkplain GenericListResponse}
+	 *
+	 * @throws Exception Excepcion
+	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
+	 * @since 23/06/2020
+	 */
+	@PostMapping(path = "modelosElemMonitorizados", consumes = "application/json")
+	public GenericListResponse<ModelosElemMonitorizadosResDTO> modelosElemMonitorizados(@RequestBody ModelosElemMonitorizadosReqDTO request)
+	throws Exception {
+		log.info("Petición recibida: modelosElemMonitorizados");
+		GenericListResponse<ModelosElemMonitorizadosResDTO> response = new GenericListResponse<>();
+		response.setData(consultasService.modelosElemMonitorizados(request));
 		return response;
 	}
 }

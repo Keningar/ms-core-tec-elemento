@@ -51,6 +51,25 @@ public class ModeloElementoController {
 		response.setData(modeloElementoService.guardarModeloElemento(Formato.mapearObjDeserializado(request, AdmiModeloElemento.class)));
 		return response;
 	}
+
+	/**
+	 * Método que actualiza un modelo de elemento
+	 *
+	 * @param request {@linkplain AdmiModeloElemento}
+	 *
+	 * @return {@linkplain GenericBasicResponse}
+	 *
+	 * @throws Exception Excepcion
+	 * @author Marlon Plúas <mailto:mpluas@telconet.ec>
+	 * @since 02/03/2020
+	 */
+	@PostMapping(path = "actualizarModeloElemento", consumes = "application/json")
+	public GenericBasicResponse<Object> actualizarModeloElemento(@RequestBody Object request) throws Exception {
+		log.info("Petición recibida: actualizarModeloElemento");
+		GenericBasicResponse<Object> response = new GenericBasicResponse<>();
+		response.setData(modeloElementoService.actualizarModeloElemento(Formato.mapearObjDeserializado(request, AdmiModeloElemento.class)));
+		return response;
+	}
 	
 	/**
 	 * Método que retorna la lista de modelos de elementos
