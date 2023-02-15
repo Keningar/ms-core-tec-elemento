@@ -2,7 +2,7 @@ variables:
   GIT_SSL_NO_VERIFY: "true"
   CI_REGISTRY_USER: "sonar-runner"
   MAVEN_OPTS: "-Dmaven.repo.local=/dependencias-m2/.m2/repository"
-  MAVEN_CLI_OPTS: "-s /dependencias-m2/.m2/dev-settings.xml --batch-mode"
+  MAVEN_CLI_OPTS: "-s /dependencias-m2/.m2/settings-artifactory-test.xml --batch-mode"
 
   SECURE_ANALYZERS_PREFIX: "registry.gitlab.telconet.ec/docker/images/spotbugs"
   SAST_DEFAULT_ANALYZERS: "spotbugs"
