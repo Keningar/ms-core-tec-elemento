@@ -33,6 +33,8 @@ management.endpoint.health.notification.mailTo=jdvinueza@telconet.ec;kjimenez@te
 management.endpoint.health.notification.mailFrom=sistemas-qa@telconet.ec
 management.endpoint.health.notification.memoryPercentMax=95
 
-management.endpoint.health.show-details=ALWAYS
+management.endpoint.health.show-details=NEVER
 management.endpoints.web.exposure.include=*
 management.endpoint.shutdown.enabled=true
+
+
